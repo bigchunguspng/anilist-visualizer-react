@@ -1,8 +1,10 @@
 import useFetch from "../useFetch";
+import { useParams } from 'react-router';
 
 function User(props) {
 
-    const {data: user, isPending, error} = useFetch(`http://localhost:5000/api/user/${props.id}`);
+    const { id } = useParams();
+    const {data: user, isPending, error} = useFetch(`http://localhost:5000/api/user/by-name/${id}`);
 
     return (
         <div className='user-holder'>

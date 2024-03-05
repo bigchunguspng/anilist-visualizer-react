@@ -17,18 +17,19 @@ function Search({items}) {
 
 function SearchResultItem(props) {
     return (
-        <div className='search-result-item'>
-            <a className="search-result entry" href={props.user.url}>
-                <div className="cover">
-                    <div
-                        className="image"
-                        style={{backgroundImage: `url(${props.user.avatar.largeImageUrl}), url(${props.user.avatar.mediumImageUrl})`}}>
-                    </div>
+        <a className="search-result entry" href={`/user/` + props.user.name}>
+            <div className="cover">
+                <div
+                    className="image"
+                    style={{
+                        width: '48px',
+                        height: '48px',
+                        backgroundImage: `url(${props.user.avatar.largeImageUrl}), url(${props.user.avatar.mediumImageUrl})`}}>
                 </div>
-                <div className="title">{props.user.name}</div>
-                <div className="last-seen">{props.user.lastSeen}</div>
-            </a>
-        </div>
+            </div>
+            <div className="title">{props.user.name}</div>
+            <div className="last-seen">{props.user.lastSeen}</div>
+        </a>
     );
 }
 
