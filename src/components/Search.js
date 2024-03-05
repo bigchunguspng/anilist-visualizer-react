@@ -5,7 +5,7 @@ function Search({items}) {
     //const {data, isPending, error} = useFetch(`http://localhost:5000/api/user/search/${props.query}`);
 
     return (
-        <div className="mb-3 medialist section">
+        <div className="mb-3 medialist section search-results">
             {items.length > 0 ? items.map((x) => (
                 <div key={x.id}>
                     <SearchResultItem user={x}/>

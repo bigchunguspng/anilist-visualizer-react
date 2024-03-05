@@ -1,7 +1,5 @@
-import User from "./User";
 import {useState} from "react";
 import Search from "./Search";
-import useFetch from "../useFetch";
 
 
 function Home() {
@@ -19,6 +17,12 @@ function Home() {
         console.log(items);
     }
 
+    function searchOnKeyDown(e) {
+        if (e.key === 'Enter') {
+            handleSearch();
+        }
+    }
+
     return (
         <div className='home'>
             <div className="text-center">
@@ -34,12 +38,11 @@ function Home() {
                         type="text"
                         autoComplete="off"
                         placeholder="Enter your username"
+                        onKeyDown={e => searchOnKeyDown(e)}
                         onChange={e => setQuery(e.target.value)}/>
                 </div>
-                <button onClick={handleSearch}>Search</button>
-                {items && <Search items={items}/>}
                 <div id="users">
-
+                    {items && <Search items={items}/>}
                 </div>
                 <p>Go to <a href="https://anilist.co">AniList</a> if you don't get it.</p>
             </div>
