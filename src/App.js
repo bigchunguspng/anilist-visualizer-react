@@ -1,7 +1,7 @@
 import {BrowserRouter, Route, Routes} from "react-router-dom";
 import Home from "./components/Home";
 import NotFound from "./components/NotFound";
-import User from "./components/User";
+import {UserPage} from "./components/User";
 
 function App() {
   return (
@@ -10,7 +10,7 @@ function App() {
           <div className='content'>
             <Routes>
               <Route path="/" element={<Home/>}/>
-              <Route path="/user/:id" element={<User/>}/>
+              <Route path="/user/:id" element={<UserPage/>}/>
               <Route path="*" element={<NotFound/>}/>
             </Routes>
           </div>
