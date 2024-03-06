@@ -24,12 +24,12 @@ function SearchResultItem(props) {
                     style={{
                         width: '48px',
                         height: '48px',
-                        backgroundImage: `url(${props.user.avatar.largeImageUrl}), url(${props.user.avatar.mediumImageUrl})`
+                        backgroundImage: `url(${props.user.avatar.large}), url(${props.user.avatar.medium})`
                     }}>
                 </div>
             </div>
             <div className="title">{props.user.name}</div>
-            <div className="last-seen">{props.user.lastSeen}</div>
+            <div className="last-seen">{props.user.lastActivity}</div>
         </a>
     );
 }

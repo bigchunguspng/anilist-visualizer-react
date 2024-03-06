@@ -12,7 +12,7 @@ function User(props) {
             {isPending && <div>Loading...</div>}
             {user && (<div className='user'>
                 <a href={user.url} target='_blank' rel="noreferrer">
-                    <img src={user.avatar.largeImageUrl} alt='[user avatar]'/>
+                    <img src={user.avatar.large} alt='[user avatar]'/>
                 </a>
                 <h2>{user.name}</h2>
             </div>)}
