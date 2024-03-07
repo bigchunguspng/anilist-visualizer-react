@@ -174,10 +174,10 @@ export function Filters() {
                     <span id="lang" a="english" b="japanese">日本語</span>
                 </button>
                 <button className="section" onClick={ToggleGrouping}>
-                    <span id="group" a="groups" b="default">Restore</span>
+                    <span id="group" a="default" b="groups">Group</span>
                 </button>
                 <button className="section" onClick={ChangeOrder}>
-                    <span id="reverse" a="reverse" b="default">Reverse</span>
+                    <span id="reverse" a="default" b="reverse">Reverse</span>
                 </button>
             </div>
         </div>
