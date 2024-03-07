@@ -1,6 +1,7 @@
 import useFetch from "../useFetch";
 import {useParams} from 'react-router';
 import React from "react";
+import {ChangeOrder, SwitchLanguage, tipHide, tipShow, ToggleGrouping} from "../scripts/scripts";
 
 export function UserPage(props) {
 
@@ -70,13 +71,9 @@ export function Animanga({id}) {
                             <Entry item={x} animanga={animanga} index={index}/>
                         )) : <div>user was too busy touching grass to watch anime</div>}
                     </div>
-                    {/*<div className="tipbox absolute">
-                        <span id="tip" style="display: none; top: 1003.58px; left: 1416.15px;">
-                                <p>Mar 1 - Mar 13</p>
-                                <p>11 episodes</p>
-                                <p>episode every 1.2 days</p>
-                            </span>
-                    </div>*/}
+                    <div className="tipbox absolute">
+                        <span id="tip"></span>
+                    </div>
                 </div>
             </main>
         </div>
@@ -101,8 +98,14 @@ export function Entry({item, animanga, index}) {
 
     const timeframe = animanga.maxDay - animanga.minDay + 1;
 
-    const left = item.timelineItem.offset;
-    const width = item.timelineItem.length;
+    const tli = item.timelineItem;
+
+    const left = tli.offset;
+    const width = tli.length;
+
+    let tip = `<p>${tli.tip.dateRange}</p>`;
+    if (tli.tip.episodes) tip += `<p>${tli.tip.episodes} ${media.type === 0 ? 'episode' : 'chapter'}${tli.tip.episodes > 1 && 's'}</p>`;
+    if (tli.tip.averageSpeed) tip += `<p>${tli.tip.averageSpeed}</p>`;
 
     return (
         <div className="entry" series={media.seriesId} n={index} key={item.id}>
@@ -128,8 +131,8 @@ export function Entry({item, animanga, index}) {
                      style={{'--left': left / timeframe * 100 + '%', '--width': width / timeframe * 100 + '%'}}>
                     <div className="range " style={{'--color-blue': media.cover.color}}>
                         <div className="hover-box"
-                             onMouseOver="tipShow(this, '<p>Feb 22 ➽</p><p>14 episodes</p><p>1.6 episodes/day</p>')"
-                             onMouseOut="tipHide()"/>
+                             onMouseOver={event => tipShow(event.target, tip)}
+                             onMouseOut={tipHide}/>
                     </div>
                 </div>
                 <div className="timeline-row text">
@@ -154,13 +157,13 @@ export function Filters() {
         <div className="control-panel">
             <h3 className="section-name">All:</h3>
             <div className="actions" id="buttons">
-                <button className="section" onClick="SwitchLanguage()">
+                <button className="section" onClick={SwitchLanguage}>
                     <span id="lang" a="english" b="japanese">日本語</span>
                 </button>
-                <button className="section" onClick="ToggleGrouping()">
+                <button className="section" onClick={ToggleGrouping}>
                     <span id="group" a="groups" b="default">Restore</span>
                 </button>
-                <button className="section" onClick="ChangeOrder()">
+                <button className="section" onClick={ChangeOrder}>
                     <span id="reverse" a="reverse" b="default">Reverse</span>
                 </button>
             </div>
