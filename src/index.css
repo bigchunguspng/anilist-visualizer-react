@@ -4,6 +4,18 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
+*, ::after, ::before {
+  box-sizing: border-box;
+}
+
+img, svg {
+  vertical-align: middle;
+}
+
+.medialist > div > :not(caption) > * {
+  margin: .1em .5em;
+}
+
 :root {
   --color-background: rgb(237, 241, 245);
   --color-foreground: rgb(250, 250, 250);
@@ -392,10 +404,6 @@ a:hover .avatar {
 
 .medialist {
   font-size: 1.5em;
-}
-
-.medialist > :not(caption) > * {
-  margin: .1em .5em;
 }
 
 .entry {
