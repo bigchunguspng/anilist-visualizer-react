@@ -1,6 +1,6 @@
 import useFetch from "../useFetch";
 import {useParams} from 'react-router';
-import React from "react";
+import React, {useEffect} from "react";
 import {ChangeOrder, SwitchLanguage, tipHide, tipShow, ToggleGrouping} from "../scripts/scripts";
 
 export function UserPage(props) {
@@ -59,6 +59,19 @@ export function Animanga({id}) {
 
     const {data: animanga, isPending, error} = useFetch(`http://localhost:5000/api/animanga/${id}`);
     const entries = animanga && animanga.entries.filter(x => x.timelineItem !== null)
+
+    useEffect(() => {
+        document.addEventListener("keydown", handleKeyDown);
+    });
+
+    const handleKeyDown = (event) => {
+        let key = event.which;
+
+        if (key === 74) SwitchLanguage();
+        else if (key === 71) ToggleGrouping();
+        else if (key === 82) ChangeOrder();
+    }
+
     return (
         <div className="container-xd">
             <main role="main" className="pb-3">
@@ -123,7 +136,7 @@ export function Entry({item, animanga, index}) {
             </div>
             <div className="timeline">
                 <div className="timeline-row">
-                    { Object.keys(animanga.years).map(x => (
+                    {Object.keys(animanga.years).map(x => (
                         <div className="timeline-year" style={{width: animanga.years[x] / timeframe * 100 + '%'}}></div>
                     ))}
                 </div>
@@ -136,10 +149,10 @@ export function Entry({item, animanga, index}) {
                     </div>
                 </div>
                 <div className="timeline-row text">
-                    { Object.keys(animanga.years).map(x => {
+                    {Object.keys(animanga.years).map(x => {
                         let percent = animanga.years[x] / timeframe * 100 + '%'
 
-                        return(
+                        return (
                             <div className="timeline-year text" style={{width: percent}}>{x}</div>
                         )
                     })}
