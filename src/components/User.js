@@ -8,6 +8,10 @@ export function UserPage(props) {
     const {username} = useParams();
     const {data: user, isPending, error} = useFetch(`http://localhost:5000/api/user/${username}`);
 
+    useEffect(() => {
+        document.title = username + " · Anilist Visualizer";
+    }, [username]);
+
     return (
         <div className='user-page'>
             {error && <div>{error}</div>}
@@ -62,7 +66,7 @@ export function Animanga({id}) {
 
     useEffect(() => {
         document.addEventListener("keydown", handleKeyDown);
-    });
+    }, []);
 
     const handleKeyDown = (event) => {
         let key = event.which;
@@ -71,6 +75,16 @@ export function Animanga({id}) {
         else if (key === 71) ToggleGrouping();
         else if (key === 82) ChangeOrder();
     }
+
+    useEffect(() => {
+        if (animanga) {
+            let cookies = document.cookie.toString();
+            if (cookies.includes('lang=japanese')) SwitchLanguage();
+            if (cookies.includes('group=groups')) ToggleGrouping();
+            if (cookies.includes('reverse=reverse')) ChangeOrder();
+            console.log(cookies);
+        }
+    }, [animanga]);
 
     return (
         <div className="container-xd">
@@ -129,7 +143,7 @@ export function Entry({item, animanga, index}) {
                          '--color-blue': media.cover.color
                      }}>
                 </div>
-                <a className="link" href={media.url} target="_blank">ア</a>
+                <a className="link" href={media.url} target="_blank">{media.type === 0 ? "ア" : "マ"}</a>
             </div>
             <div className={"title " + status} english={media.title.english} japanese={media.title.japanese}>
                 {media.title.english}
