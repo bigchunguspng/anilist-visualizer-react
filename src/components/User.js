@@ -66,10 +66,8 @@ export function Animanga({id}) {
                     <div className="medialist section" id="animanga">
                         {error && <div>{error}</div>}
                         {isPending && <div>Loading...</div>}
-                        {animanga && entries.length > 0 ? entries.map((x) => (
-                            <div key={x.id}>
-                                <Entry item={x} animanga={animanga}/>
-                            </div>
+                        {animanga && entries.length > 0 ? entries.map((x, index) => (
+                            <Entry item={x} animanga={animanga} index={index}/>
                         )) : <div>user was too busy touching grass to watch anime</div>}
                     </div>
                     {/*<div className="tipbox absolute">
@@ -85,7 +83,7 @@ export function Animanga({id}) {
     )
 }
 
-export function Entry({item, animanga}) {
+export function Entry({item, animanga, index}) {
 
     const statuses = [
         "CURRENT",
@@ -107,7 +105,7 @@ export function Entry({item, animanga}) {
     const width = item.timelineItem.length;
 
     return (
-        <div className="entry" series={media.seriesId} n="110">
+        <div className="entry" series={media.seriesId} n={index} key={item.id}>
             <div className="cover">
                 <div className="image color"
                      style={{
