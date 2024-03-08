@@ -126,6 +126,7 @@ export function Entry({item, animanga, index}) {
     const timeframe = animanga.maxDay - animanga.minDay + 1;
 
     const tli = item.timelineItem;
+    const air = media.timelineItem;
 
     const left = tli.offset;
     const width = tli.length;
@@ -154,6 +155,13 @@ export function Entry({item, animanga, index}) {
                         <div className="timeline-year" style={{width: animanga.years[x] / timeframe * 100 + '%'}}></div>
                     ))}
                 </div>
+                {
+                    air && <AiringTip
+                        left={air.offset / timeframe * 100 + '%'}
+                        width={air.length / timeframe * 100 + '%'}
+                        season={air.season}
+                    />
+                }
                 <div className="timeline-item tip"
                      style={{'--left': left / timeframe * 100 + '%', '--width': width / timeframe * 100 + '%'}}>
                     <div className={"range" + (tli.stripes ? " stripes" : "")} style={{'--color-blue': media.cover.color}}>
@@ -175,6 +183,18 @@ export function Entry({item, animanga, index}) {
             <span className="entry-status">
                 {status !== "COMPLETED" && <img src={`/svg/status/${status}.svg`} alt={status}/>}
             </span>
+        </div>
+    )
+}
+
+export function AiringTip({left, width, season}) {
+    return (
+        <div className="timeline-item releasing stripes"
+             style={{
+                 marginLeft: left,
+                 width: width
+             }}>
+            <div className="season">{season}</div>
         </div>
     )
 }
