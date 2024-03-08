@@ -156,7 +156,7 @@ export function Entry({item, animanga, index}) {
                 </div>
                 <div className="timeline-item tip"
                      style={{'--left': left / timeframe * 100 + '%', '--width': width / timeframe * 100 + '%'}}>
-                    <div className="range " style={{'--color-blue': media.cover.color}}>
+                    <div className={"range" + (tli.stripes ? " stripes" : "")} style={{'--color-blue': media.cover.color}}>
                         <div className="hover-box"
                              onMouseOver={event => tipShow(event.target, tip)}
                              onMouseOut={tipHide}/>
