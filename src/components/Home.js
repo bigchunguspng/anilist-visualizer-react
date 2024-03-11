@@ -24,7 +24,7 @@ function Home() {
     }
 
     return (
-        <div className='home'>
+        <main className='home pb-3'>
             <div className="text-center">
                 <img
                     className="logo"
@@ -46,7 +46,7 @@ function Home() {
                 </div>
                 <p>Go to <a href="https://anilist.co">AniList</a> if you don't get it.</p>
             </div>
-        </div>
+        </main>
     );
 }
 
