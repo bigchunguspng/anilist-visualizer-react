@@ -139,8 +139,9 @@ export function Entry({item, animanga, index}) {
     const width = tli.length;
 
     let tip = `<p>${tli.tip.dateRange}</p>`;
-    if (tli.tip.episodes) tip += `<p>${tli.tip.episodes} ${media.type === 0 ? 'episode' : 'chapter'}${tli.tip.episodes > 1 && 's'}</p>`;
+    if (tli.tip.episodes) tip += `<p>${tli.tip.episodes} ${media.type === 0 ? 'episode' : 'chapter'}${tli.tip.episodes > 1 ? 's' : ''}</p>`;
     if (tli.tip.averageSpeed) tip += `<p>${tli.tip.averageSpeed}</p>`;
+
 
     return (
         <div className="entry" series={media.seriesId} n={index}>
