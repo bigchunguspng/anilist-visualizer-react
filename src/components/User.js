@@ -95,7 +95,9 @@ export function Animanga({id}) {
                         {error && <div>{error}</div>}
                         {isPending && <div>Loading...</div>}
                         {animanga && entries.length > 0 ? entries.map((x, index) => (
-                            <Entry item={x} animanga={animanga} index={index}/>
+                            <React.Fragment key={x.id}>
+                                <Entry item={x} animanga={animanga} index={index}/>
+                            </React.Fragment>
                         )) : <div>user was too busy touching grass to watch anime</div>}
                     </div>
                     <div className="tipbox absolute">
@@ -136,7 +138,7 @@ export function Entry({item, animanga, index}) {
     if (tli.tip.averageSpeed) tip += `<p>${tli.tip.averageSpeed}</p>`;
 
     return (
-        <div className="entry" series={media.seriesId} n={index} key={item.id}>
+        <div className="entry" series={media.seriesId} n={index}>
             <div className="cover">
                 <div className="image color"
                      style={{
@@ -151,8 +153,8 @@ export function Entry({item, animanga, index}) {
             </div>
             <div className="timeline">
                 <div className="timeline-row">
-                    {Object.keys(animanga.years).map(x => (
-                        <div className="timeline-year" style={{width: animanga.years[x] / timeframe * 100 + '%'}}></div>
+                    {Object.keys(animanga.years).map((x, index) => (
+                        <div className="timeline-year" style={{width: animanga.years[x] / timeframe * 100 + '%'}} key={index}/>
                     ))}
                 </div>
                 {
@@ -171,11 +173,11 @@ export function Entry({item, animanga, index}) {
                     </div>
                 </div>
                 <div className="timeline-row text">
-                    {Object.keys(animanga.years).map(x => {
+                    {Object.keys(animanga.years).map((x, index) => {
                         let percent = animanga.years[x] / timeframe * 100 + '%'
 
                         return (
-                            <div className="timeline-year text" style={{width: percent}}>{x}</div>
+                            <div className="timeline-year text" style={{width: percent}} key={index}>{x}</div>
                         )
                     })}
                 </div>

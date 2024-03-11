@@ -7,9 +7,9 @@ function Search({items}) {
     return (
         <div className="mb-3 medialist section search-results">
             {items.length > 0 ? items.map((x) => (
-                <div key={x.id}>
+                <React.Fragment key={x.id}>
                     <SearchResultItem user={x}/>
-                </div>
+                </React.Fragment>
             )) : <NotFoundSearchResult/>}
         </div>
     );
@@ -22,8 +22,6 @@ function SearchResultItem(props) {
                 <div
                     className="image"
                     style={{
-                        width: '48px',
-                        height: '48px',
                         backgroundImage: `url(${props.user.avatar.large}), url(${props.user.avatar.medium})`
                     }}>
                 </div>
