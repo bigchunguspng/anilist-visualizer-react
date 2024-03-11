@@ -64,6 +64,11 @@ export function Animanga({id}) {
     const {data: animanga, isPending, error} = useFetch(`http://localhost:5000/api/animanga/${id}`);
     const entries = animanga && animanga.entries.filter(x => x.timelineItem !== null)
 
+    const countTotal = animanga ? Object.keys(animanga.entries).length : 0;
+    const countEntry = animanga ? Object.keys(entries).length : 0;
+
+    const header = animanga ? `${countEntry}/${countTotal} titles · ${animanga.seriesShown}/${animanga.seriesTotal} series` : "";
+
     useEffect(() => {
         document.addEventListener("keydown", handleKeyDown);
     }, []);
@@ -89,7 +94,7 @@ export function Animanga({id}) {
     return (
         <div className="container-xd">
             <main role="main" className="pb-3">
-                <Filters/>
+                <Filters header={header}/>
                 <div>
                     <div className="medialist section" id="animanga">
                         {error && <div>{error}</div>}
@@ -201,10 +206,10 @@ export function AiringTip({left, width, season}) {
     )
 }
 
-export function Filters() {
+export function Filters({header}) {
     return (
         <div className="control-panel">
-            <h3 className="section-name">All:</h3>
+            <h3 className="section-name">{header}</h3>
             <div className="actions" id="buttons">
                 <button className="section" onClick={SwitchLanguage}>
                     <span id="lang" a="english" b="japanese">日本語</span>
