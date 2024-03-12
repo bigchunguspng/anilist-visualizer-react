@@ -228,20 +228,6 @@ p {
 }
 
 
-@media (max-width: 449px) {
-  .user-count {
-    font-size: calc(6px + 2vw) !important;
-  }
-
-  .user-info.text h1 {
-    font-size: calc(10px + 3vw) !important;
-  }
-
-  .user-info.text * {
-    margin-left: 3vw !important;
-  }
-}
-
 main {
   min-height: 100vh;
   line-height: 1.15;
@@ -330,47 +316,10 @@ html {
   min-height: 100%;
 }
 
-header.user {
-  background-color: #242538;
-  background-position: 50% 35%;
-  background-repeat: no-repeat;
-  background-size: cover;
-  height: 240px;
-  margin-bottom: 12px;
-  position: relative;
-  display: flex;
-  align-items: flex-end;
-}
-
-.banner-shadow {
-  background: linear-gradient(180deg, rgba(var(--color-shadow-dark), 0) 40%, rgba(var(--color-shadow-dark), 0.6));
-  height: 100%;
-  width: 100%;
-  position: absolute;
-}
 
 body {
   color: var(--color-text);
   background-color: var(--color-background);
-}
-
-footer {
-  background-color: #11161d;
-  padding-bottom: 60px;
-}
-
-footer a {
-  color: #a0b1c5;
-  font-family: var(--font-tips);
-  font-weight: 600;
-  text-align: left;
-  text-decoration: none;
-  padding: 14px;
-  display: inline-block;
-}
-
-footer a:hover {
-  color: var(--color-blue);
 }
 
 
@@ -379,51 +328,6 @@ footer a:hover {
   border-radius: 4px;
   box-shadow: 0 2px 20px rgba(var(--color-shadow), var(--shadow-opacity));
   padding-block: 4px;
-}
-
-.user-info {
-  align-items: flex-end;
-  display: flex;
-  width: 100%;
-  z-index: 1;
-}
-
-.user-info.text {
-  margin-bottom: 18px;
-}
-
-.user-info * {
-  display: inline-block;
-  margin-block: 0;
-}
-
-.user-info.text * {
-  margin-left: 25px;
-}
-
-
-.avatar {
-  border-radius: 4px 4px 0 0;
-  max-height: 230px;
-  max-width: 160px;
-  width: 100%;
-}
-
-a:hover .avatar {
-  transform: scale(1.05);
-  transform-origin: bottom;
-}
-
-.user-name {
-  color: var(--color-text-bright);
-  font-family: var(--font-tips);
-  font-weight: 800;
-}
-
-.user-count {
-  font-size: 1.5em;
-  color: var(--color-background-500);
-  display: block;
 }
 
 
@@ -859,19 +763,6 @@ header:not(.user) .nav-logo img {
   z-index: -1;
 }
 
-.ifunny {
-  position: absolute;
-  bottom: 0;
-  right: 0;
-  width: 100px;
-  max-width: 20vw;
-  cursor: text;
-  mix-blend-mode: screen;
-  font-family: var(--font-tips);
-  font-weight: bold;
-  text-align: end;
-  color: var(--color-yellow);
-}
 
 .section hr {
   border: 0;

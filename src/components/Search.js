@@ -1,9 +1,6 @@
 import React from 'react';
 
 function Search({items}) {
-
-    //const {data, isPending, error} = useFetch(`http://localhost:5000/api/user/search/${props.query}`);
-
     return (
         <div className="mb-3 medialist section search-results">
             {items.length > 0 ? items.map((x) => (
@@ -15,19 +12,19 @@ function Search({items}) {
     );
 }
 
-function SearchResultItem(props) {
+function SearchResultItem({user}) {
     return (
-        <a className="search-result entry" href={`/user/` + props.user.name}>
+        <a className="search-result entry" href={`/user/` + user.name}>
             <div className="cover">
                 <div
                     className="image"
                     style={{
-                        backgroundImage: `url(${props.user.avatar.large}), url(${props.user.avatar.medium})`
+                        backgroundImage: `url(${user.avatar.large}), url(${user.avatar.medium})`
                     }}>
                 </div>
             </div>
-            <div className="title">{props.user.name}</div>
-            <div className="last-seen">{props.user.lastActivity}</div>
+            <div className="title">{user.name}</div>
+            <div className="last-seen">{user.lastActivity}</div>
         </a>
     );
 }

@@ -1,10 +1,11 @@
 import React from 'react';
 import {Link} from "react-router-dom";
+import './Footer.css';
 
 function Footer() {
     return (
         <footer>
-            <div className="container-xxl text-center">
+            <div className="text-center">
                 <Link to="https://anilist.co" target="_blank">AniList.co</Link>
                 <Link to="https://github.com/bigchunguspng/anilist-visualizer" target="_blank">GitHub</Link>
             </div>

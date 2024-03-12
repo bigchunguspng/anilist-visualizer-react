@@ -1,0 +1,32 @@
+footer {
+    background-color: #11161d;
+    padding-bottom: 80px;
+}
+
+footer a {
+    color: #a0b1c5;
+    font-family: var(--font-tips);
+    font-weight: 600;
+    text-align: left;
+    text-decoration: none;
+    padding: 14px;
+    display: inline-block;
+}
+
+footer a:hover {
+    color: var(--color-blue);
+}
+
+.ifunny {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    width: 100px;
+    max-width: 20vw;
+    cursor: text;
+    mix-blend-mode: screen;
+    font-family: var(--font-tips);
+    font-weight: bold;
+    text-align: end;
+    color: var(--color-yellow);
+}

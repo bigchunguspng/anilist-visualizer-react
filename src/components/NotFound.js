@@ -1,13 +1,24 @@
 import React from 'react';
-import {Link} from "react-router-dom";
+
+import SiteLogo from "./SiteLogo";
 
 function NotFound() {
+
+    document.title = "Nothing here…";
+
     return (
-        <div className='not-found'>
-            <h2>Page Not Found</h2>
-            <p>Oops...</p>
-            <Link to='/'>Back to Home</Link>
-        </div>
+        <React.Fragment>
+            <header>
+                <SiteLogo/>
+            </header>
+            <main>
+                <div className="text-center diffuse">
+                    <img className="logo" src="https://i.imgur.com/CdcGFjA.png" alt="*Akko staring at the monitor*"/>
+                    <h1>Page Not Found</h1>
+                    <p>You picked the wrong URL baka!</p>
+                </div>
+            </main>
+        </React.Fragment>
     );
 }
 
