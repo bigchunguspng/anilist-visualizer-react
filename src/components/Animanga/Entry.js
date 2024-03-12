@@ -4,7 +4,7 @@ import React from "react";
 import AiringTip from "./AiringTip";
 import TimelineRow from "./TimelineRow";
 
-function Entry({item, animanga, index}) {
+function Entry({item, maxDay, minDay, years, index}) {
 
     const statuses = [
         "CURRENT",
@@ -20,7 +20,7 @@ function Entry({item, animanga, index}) {
     const medium = baseUrl + media.cover.medium;
     const large = baseUrl + media.cover.large;
 
-    const timeframe = animanga.maxDay - animanga.minDay + 1;
+    const timeframe = maxDay - minDay + 1;
 
     const tli = item.timelineItem;
     const air = media.timelineItem;
@@ -47,7 +47,7 @@ function Entry({item, animanga, index}) {
                 {media.title.english}
             </div>
             <div className="timeline">
-                <TimelineRow years={animanga.years} timeframe={timeframe} text={false}/>
+                <TimelineRow years={years} timeframe={timeframe} text={false}/>
                 {
                     air && <AiringTip
                         left={air.offset / timeframe * 100 + '%'}
@@ -69,7 +69,7 @@ function Entry({item, animanga, index}) {
                              onMouseOut={tipHide}/>
                     </div>
                 </div>
-                <TimelineRow years={animanga.years} timeframe={timeframe} text={true}/>
+                <TimelineRow years={years} timeframe={timeframe} text={true}/>
             </div>
             <span className="entry-status">
                 {status !== "COMPLETED" && <img src={`/svg/status/${status}.svg`} alt={status}/>}

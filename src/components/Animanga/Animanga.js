@@ -45,9 +45,13 @@ function Animanga({id}) {
                         {error && <div>{error}</div>}
                         {isPending && <div>Loading...</div>}
                         {animanga && entries.length > 0 ? entries.map((x, index) => (
-                            <React.Fragment key={x.id}>
-                                <Entry item={x} animanga={animanga} index={index}/>
-                            </React.Fragment>
+                            <Entry
+                                item={x}
+                                minDay={animanga.minDay}
+                                maxDay={animanga.maxDay}
+                                years={animanga.years}
+                                index={index}
+                                key={x.id}/>
                         )) : <div>user was too busy touching grass to watch anime</div>}
                     </div>
                     <div className="tipbox absolute">
