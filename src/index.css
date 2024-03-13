@@ -254,7 +254,7 @@ p {
   padding-bottom: 2rem !important;
 }
 
-.actions button {
+.actions button, .actions select {
   font-size: 1.1em;
   min-height: 32px;
   margin-left: 6px;
@@ -262,6 +262,13 @@ p {
   border: none;
   color: var(--color-text);
   transition: 0.1s;
+}
+
+.actions > div {
+  font-size: 1.1em;
+  margin-block: auto;
+  margin-left: 16px;
+  margin-right: 10px;
 }
 
 @media (hover: hover) {
@@ -284,10 +291,17 @@ p {
 }
 
 .section-name {
-  font-size: 1.9em;
-  font-weight: 400;
   padding-left: 30px;
-  margin-block: 0.8em;
+  margin-block: 0.8rem;
+}
+
+.section-name h3 {
+    font-size: 1.9em;
+    font-weight: 400;
+}
+
+.section-name div {
+    font-size: 1.1em;
 }
 
 .control-panel {

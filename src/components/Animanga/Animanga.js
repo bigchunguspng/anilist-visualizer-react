@@ -37,27 +37,32 @@ function Animanga({id}) {
     }, [animanga]);
 
     return (
+
         <div className="container-xd">
             <main role="main" className="pb-3">
-                <Filters header={header}/>
-                <div>
-                    <div className="medialist section" id="animanga">
-                        {error && <div>{error}</div>}
-                        {isPending && <div>Loading...</div>}
-                        {animanga && entries.length > 0 ? entries.map((x, index) => (
-                            <Entry
-                                item={x}
-                                minDay={animanga.minDay}
-                                maxDay={animanga.maxDay}
-                                years={animanga.years}
-                                index={index}
-                                key={x.id}/>
-                        )) : <div>user was too busy touching grass to watch anime</div>}
-                    </div>
-                    <div className="tipbox absolute">
-                        <span id="tip"></span>
-                    </div>
-                </div>
+                {error && <div>{error}</div>}
+                {isPending && <div>Loading...</div>}
+                {animanga &&
+                    <React.Fragment>
+                        <Filters header={header} years={animanga.years}/>
+                        <div>
+                            <div className="medialist section" id="animanga">
+                                {entries.length > 0 ? entries.map((x, index) => (
+                                    <Entry
+                                        item={x}
+                                        minDay={animanga.minDay}
+                                        maxDay={animanga.maxDay}
+                                        years={animanga.years}
+                                        index={index}
+                                        key={x.id}/>
+                                )) : <div>user was too busy touching grass to watch anime</div>}
+                            </div>
+                            <div className="tipbox absolute">
+                                <span id="tip"></span>
+                            </div>
+                        </div>
+                    </React.Fragment>
+                }
             </main>
         </div>
     )
