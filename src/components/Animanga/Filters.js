@@ -27,34 +27,40 @@ function Filters({header, years, handleYears}) {
                 <div>{header}</div>
             </div>
             <div className="actions" id="buttons">
-                <button className="section" onClick={SwitchLanguage}>
-                    <span id="lang" a="english" b="japanese">日本語</span>
-                </button>
-                <button className="section" onClick={ToggleGrouping}>
-                    <span id="group" a="default" b="groups">Group</span>
-                </button>
-                <button className="section" onClick={ChangeOrder}>
-                    <span id="reverse" a="default" b="reverse">Reverse</span>
-                </button>
-                <div> From:</div>
-                <select className="section" value={from} onChange={e => setFrom(e.target.value)}>
-                    {
-                        years.map((x) => {
-                            return (<option value={x} key={x}>{x}</option>)
-                        })
-                    }
-                </select>
-                <div> To:</div>
-                <select className="section" value={to} onChange={e => setTo(e.target.value)}>
-                    {
-                        years.map((x) => {
-                            return (<option value={x} key={x}>{x}</option>)
-                        })
-                    }
-                </select>
+                <ActionButton id="lang" a="english" b="japanese" title="日本語" onClick={SwitchLanguage}/>
+                <ActionButton id="group" a="default" b="groups" title="Group" onClick={ToggleGrouping}/>
+                <ActionButton id="reverse" a="default" b="reverse" title="Reverse" onClick={ChangeOrder}/>
+                <YearSelection title="From:" years={years} year={from} setYear={setFrom}/>
+                <YearSelection title="To:" years={years} year={to} setYear={setTo}/>
             </div>
         </div>
     )
 }
 
 export default Filters;
+
+
+function ActionButton({id, title, a, b, onClick}) {
+    return (
+        <button className="section" onClick={onClick}>
+            <span id={id} a={a} b={b}>{title}</span>
+        </button>
+    );
+}
+
+function YearSelection({title, years, year, setYear}) {
+    return (
+        <React.Fragment>
+            <div>
+                {title}
+            </div>
+            <select className="section" value={year} onChange={e => setYear(e.target.value)}>
+                {
+                    years.map((x) => {
+                        return (<option value={x} key={x}>{x}</option>)
+                    })
+                }
+            </select>
+        </React.Fragment>
+    );
+}
