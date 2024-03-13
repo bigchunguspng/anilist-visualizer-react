@@ -316,6 +316,14 @@ p {
   display: flex;
 }
 
+.error {
+  margin-block: 10px !important;
+}
+
+.section-name.error {
+  font-size: 1.1em;
+}
+
 .invisible {
   display: none;
 }

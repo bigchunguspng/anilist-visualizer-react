@@ -3,27 +3,19 @@ import {useEffect, useState} from "react";
 const useFetch = (url) => {
 
     const [data, setData] = useState(null);
-    const [isPending, setIsPending] = useState(true);
     const [error, setError] = useState(null);
 
     useEffect(() => {
         fetch(url)
             .then(response => {
-                if (!response.ok) throw Error('BRUH...')
-                return response.json();
+                if (response.ok) return response.json();
+                else throw Error('BRUH...')
             })
-            .then(data => {
-                setData(data);
-                setIsPending(false);
-                setError(null);
-            })
-            .catch(e => {
-                setIsPending(false);
-                setError(e.message);
-            });
+            .then(data => setData(data))
+            .catch(e => setError(e.message));
     }, [url]);
 
-    return { data, isPending, error };
+    return {data, error};
 }
 
 export default useFetch;

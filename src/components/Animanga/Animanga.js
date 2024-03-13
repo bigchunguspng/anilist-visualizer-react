@@ -6,7 +6,7 @@ import Filters from "./Filters";
 
 function Animanga({id}) {
 
-    const {data: animanga, isPending, error} = useFetch(`http://localhost:5000/api/animanga/${id}`);
+    const {data: animanga, error} = useFetch(`http://localhost:5000/api/animanga/${id}`);
     const entries = animanga && animanga.entries.filter(x => x.timelineItem !== null)
 
     const countTotal = animanga ? Object.keys(animanga.entries).length : 0;
@@ -40,28 +40,28 @@ function Animanga({id}) {
 
         <div className="container-xd">
             <main role="main" className="pb-3">
-                {error && <div>{error}</div>}
-                {isPending && <div>Loading...</div>}
-                {animanga &&
-                    <React.Fragment>
-                        <Filters header={header} years={animanga.years}/>
-                        <div>
-                            <div className="medialist section" id="animanga">
-                                {entries.length > 0 ? entries.map((x, index) => (
-                                    <Entry
-                                        item={x}
-                                        minDay={animanga.minDay}
-                                        maxDay={animanga.maxDay}
-                                        years={animanga.years}
-                                        index={index}
-                                        key={x.id}/>
-                                )) : <div>user was too busy touching grass to watch anime</div>}
+                {
+                    animanga ?
+                        <React.Fragment>
+                            <Filters header={header} years={animanga.years}/>
+                            <div>
+                                <div className="medialist section" id="animanga">
+                                    {entries.length > 0 ? entries.map((x, index) => (
+                                        <Entry
+                                            item={x}
+                                            minDay={animanga.minDay}
+                                            maxDay={animanga.maxDay}
+                                            years={animanga.years}
+                                            index={index}
+                                            key={x.id}/>
+                                    )) : <div>user was too busy touching grass to watch anime</div>}
+                                </div>
+                                <div className="tipbox absolute">
+                                    <span id="tip"></span>
+                                </div>
                             </div>
-                            <div className="tipbox absolute">
-                                <span id="tip"></span>
-                            </div>
-                        </div>
-                    </React.Fragment>
+                        </React.Fragment>
+                        : <div className="section-name error">{error ? error : 'Loading...'}</div>
                 }
             </main>
         </div>
