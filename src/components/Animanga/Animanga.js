@@ -1,5 +1,5 @@
 import useFetch from "../../useFetch";
-import React, {useEffect, useState} from "react";
+import React, {useEffect, useRef, useState} from "react";
 import {ChangeOrder, SwitchLanguage, ToggleGrouping} from "../../scripts/scripts";
 import Entry from "./Entry";
 import Filters from "./Filters";
@@ -14,32 +14,50 @@ function Animanga({id}) {
 
     const {data: animanga, error} = useFetch(url);
 
+    const options = useRef(null);
+
     useEffect(() => {
-        console.log("ufx: keys")
         document.addEventListener("keydown", handleKeyDown);
     }, []);
 
     useEffect(() => {
         if (animanga) {
-            console.log("ufx: animanga");
             setEntries(animanga.entries.filter(x => x.timelineItem !== null));
         }
     }, [animanga]);
 
     useEffect(() => {
         if (animanga && entries) {
-            console.log("ufx: animanga && entries");
             const countTotal = animanga ? Object.keys(animanga.entries).length : 0;
             const countEntry = animanga ? Object.keys(entries).length : 0;
             setHeader(`${countEntry}/${countTotal} titles · ${animanga.seriesShown}/${animanga.seriesTotal} series`);
 
-            let cookies = document.cookie.toString();
-            console.log(cookies);
-            if (cookies.includes('lang=japanese')) SwitchLanguage();
-            if (cookies.includes('group=groups')) ToggleGrouping();
-            if (cookies.includes('reverse=reverse')) ChangeOrder();
+            handleCookies();
         }
-    }, [animanga, entries]);
+        if (options.current) handleActions(options.current);
+    }, [entries]);
+
+    const handleYearsChange = (from, to) => {
+        options.current = handleCookies();
+        setUrl(`${baseUrl + id}/${from}/${to}`);
+    }
+
+    const handleCookies = () => {
+        let cookies = document.cookie.toString();
+        let ops = {
+            j: cookies.includes('lang=japanese'),
+            g: cookies.includes('group=groups'),
+            r: cookies.includes('reverse=reverse')
+        }
+        handleActions(ops);
+        return ops;
+    }
+
+    const handleActions = ({j, g, r}) => {
+        if (j) SwitchLanguage();
+        if (g) ToggleGrouping();
+        if (r) ChangeOrder();
+    }
 
     const handleKeyDown = (event) => {
         let key = event.which;
@@ -47,12 +65,6 @@ function Animanga({id}) {
         if (key === 74) SwitchLanguage();
         else if (key === 71) ToggleGrouping();
         else if (key === 82) ChangeOrder();
-    }
-
-    const handleYears = (from, to) => {
-        let endpoint = `${baseUrl + id}/${from}/${to}`;
-        setUrl(endpoint);
-        console.log(endpoint);
     }
 
     return (
@@ -65,7 +77,7 @@ function Animanga({id}) {
                             <Filters
                                 header={header}
                                 years={animanga.years}
-                                handleYears={handleYears}/>
+                                handleYears={handleYearsChange}/>
                             <div>
                                 <div className="medialist section" id="animanga">
                                     {
