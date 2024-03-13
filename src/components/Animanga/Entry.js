@@ -4,7 +4,7 @@ import React from "react";
 import AiringTip from "./AiringTip";
 import TimelineRow from "./TimelineRow";
 
-function Entry({item, maxDay, minDay, years, index}) {
+function Entry({item, maxDay, minDay, sections, index}) {
 
     const statuses = [
         "CURRENT",
@@ -47,7 +47,7 @@ function Entry({item, maxDay, minDay, years, index}) {
                 {media.title.english}
             </div>
             <div className="timeline">
-                <TimelineRow years={years} timeframe={timeframe} text={false}/>
+                <TimelineRow sections={sections} timeframe={timeframe} text={false}/>
                 {
                     air && <AiringTip
                         left={air.offset / timeframe * 100 + '%'}
@@ -69,7 +69,7 @@ function Entry({item, maxDay, minDay, years, index}) {
                              onMouseOut={tipHide}/>
                     </div>
                 </div>
-                <TimelineRow years={years} timeframe={timeframe} text={true}/>
+                <TimelineRow sections={sections} timeframe={timeframe} text={true}/>
             </div>
             <span className="entry-status">
                 {status !== "COMPLETED" && <img src={`/svg/status/${status}.svg`} alt={status}/>}

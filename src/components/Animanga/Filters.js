@@ -1,9 +1,24 @@
 import {ChangeOrder, SwitchLanguage, ToggleGrouping} from "../../scripts/scripts";
-import React from "react";
+import React, {useEffect, useState} from "react";
 
-function Filters({header, years}) {
+function Filters({header, years, handleYears}) {
 
-    const yearsArray = Object.keys(years);
+    const min = years[0];
+    const max = years[years.length - 1];
+
+    const [from, setFrom] = useState(min);
+    const [to, setTo] = useState(max);
+
+    const [fromWas, setFromWas] = useState(from);
+    const [toWas, setToWas] = useState(to);
+
+    useEffect(() => {
+        if (from === fromWas && to === toWas) return;
+
+        setFromWas(from);
+        setToWas(to);
+        handleYears(from, to);
+    }, [from, to]);
 
     return (
         <div className="control-panel">
@@ -22,17 +37,17 @@ function Filters({header, years}) {
                     <span id="reverse" a="default" b="reverse">Reverse</span>
                 </button>
                 <div> From:</div>
-                <select className="section" defaultValue={yearsArray[0]}>
+                <select className="section" value={from} onChange={e => setFrom(e.target.value)}>
                     {
-                        yearsArray.map((x) => {
+                        years.map((x) => {
                             return (<option value={x} key={x}>{x}</option>)
                         })
                     }
                 </select>
                 <div> To:</div>
-                <select className="section" defaultValue={yearsArray[yearsArray.length - 1]}>
+                <select className="section" value={to} onChange={e => setTo(e.target.value)}>
                     {
-                        yearsArray.map((x) => {
+                        years.map((x) => {
                             return (<option value={x} key={x}>{x}</option>)
                         })
                     }
