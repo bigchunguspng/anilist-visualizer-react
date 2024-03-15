@@ -27,12 +27,12 @@ function Animanga({id}) {
         document.cookie = 'reverse=' + ordering + '; max-age=7776000; path=/';
     }, [ordering]);
 
-    useEffect(() => {
+    /*useEffect(() => {
         if (entries) {
             const copy = [...entries];
             setEntries(copy.reverse());
         }
-    }, [ordering]);
+    }, [ordering]);*/
 
 
     /*    useEffect(() => {
@@ -40,10 +40,7 @@ function Animanga({id}) {
         }, []);*/
 
     useEffect(() => {
-        if (animanga) {
-            const visible = animanga.entries.filter(x => x.timelineItem !== null);
-            setEntries(ordering === 'reverse' ? visible.reverse() : visible);
-        }
+        if (animanga) setEntries(animanga.entries.filter(x => x.timelineItem !== null));
     }, [animanga]);
 
     useEffect(() => {
@@ -104,7 +101,13 @@ function Animanga({id}) {
                                 years={animanga.years}
                                 handleYears={handleYearsChange}/>
                             <div>
-                                <div className="medialist section" id="animanga">
+                                <div
+                                    id="animanga"
+                                    className="medialist section"
+                                    style={{
+                                        display: "flex",
+                                        flexDirection: ordering === "reverse" ? "column-reverse" : "column"
+                                    }}>
                                     {
                                         entries.length > 0 ?
                                             entries.map((x, index) => (
