@@ -1,6 +1,6 @@
 import useFetch from "../../useFetch";
 import React, {createContext, useEffect, useRef, useState} from "react";
-import {cookiesHas, groupEntries, setCookie} from "../../scripts/scripts";
+import {cookiesHas, groupEntries, setCookie, switchMode} from "../../scripts/scripts";
 import Entry from "./Entry";
 import Filters from "./Filters";
 
@@ -54,8 +54,6 @@ export default function Animanga({id}) {
         else if (key === 82) switchMode(setOrdering, options.current.ordering, 'default', 'reverse');
     };
 
-    const switchMode = (setOption, option, valueA, valueB) => setOption(option === valueB ? valueA : valueB);
-
 
     // OTHER
     const getVisibleEntries = () => animanga.entries.filter(x => x.timelineItem !== null);
@@ -108,7 +106,7 @@ export default function Animanga({id}) {
                                                 x === '-' ?
                                                     <hr key={index}/> :
                                                     <Entry
-                                                        item={x}
+                                                        entry={x}
                                                         key={x.id}
                                                         minDay={animanga.minDay}
                                                         maxDay={animanga.maxDay}

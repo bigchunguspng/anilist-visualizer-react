@@ -48,6 +48,9 @@ export function cookiesHas(text)
 }
 
 
+export const switchMode = (setOption, option, valueA, valueB) => setOption(option === valueB ? valueA : valueB);
+
+
 export function groupEntries(entries)
 {
     const series = new Set();

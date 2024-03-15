@@ -1,5 +1,6 @@
 import React, {useContext, useEffect, useState} from "react";
 import {OptionsContext} from "./Animanga";
+import {switchMode} from "../../scripts/scripts";
 
 export default function Filters({header, years, handleYears}) {
 
@@ -73,14 +74,12 @@ function SwitchButton({titleA, titleB, valueA, valueB, option, setOption}) {
 
     const [title, setTitle] = useState(getTitle());
 
-    const switchMode = () => {
-        setOption(option === valueB ? valueA : valueB);
-    }
-
     useEffect(() => setTitle(getTitle()), [option]);
 
+    const handleClick = () => switchMode(setOption, option, valueA, valueB);
+
     return (
-        <button className="section" onClick={switchMode}>
+        <button className="section" onClick={handleClick}>
             <span>{title}</span>
         </button>
     );

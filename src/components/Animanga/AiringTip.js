@@ -1,13 +1,13 @@
 import React from "react";
 
-function AiringTip({left, width, season}) {
+function AiringTip({airing, percent}) {
     return (
         <div className="timeline-item releasing stripes"
              style={{
-                 marginLeft: left,
-                 width: width
+                 marginLeft: percent(airing.offset),
+                 width: percent(airing.length)
              }}>
-            <div className="season">{season}</div>
+            <div className="season">{airing.season}</div>
         </div>
     )
 }
