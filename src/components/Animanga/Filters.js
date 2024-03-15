@@ -1,5 +1,6 @@
 import {ChangeOrder, SwitchLanguage, ToggleGrouping} from "../../scripts/scripts";
-import React, {useEffect, useState} from "react";
+import React, {useContext, useEffect, useRef, useState} from "react";
+import {OptionsContext} from "./Animanga";
 
 function Filters({header, years, handleYears}) {
 
@@ -27,11 +28,37 @@ function Filters({header, years, handleYears}) {
                 <div>{header}</div>
             </div>
             <div className="actions" id="buttons">
-                <ActionButton id="lang" a="english" b="japanese" title="日本語" onClick={SwitchLanguage}/>
-                <ActionButton id="group" a="default" b="groups" title="Group" onClick={ToggleGrouping}/>
-                <ActionButton id="reverse" a="default" b="reverse" title="Reverse" onClick={ChangeOrder}/>
-                <YearSelection title="From:" years={years} year={from} setYear={setFrom}/>
-                <YearSelection title="To:" years={years} year={to} setYear={setTo}/>
+                <SwitchButton
+                    id="lang"
+                    a0="english"
+                    b0="japanese"
+                    titleA="日本語"
+                    titleB="English"
+                    onClick={SwitchLanguage}/>
+                <SwitchButton
+                    id="group"
+                    a0="default"
+                    b0="groups"
+                    titleA="Group"
+                    titleB="Restore"
+                    onClick={ToggleGrouping}/>
+                <SwitchButton
+                    id="reverse"
+                    a0="default"
+                    b0="reverse"
+                    titleA="Reverse"
+                    titleB="Reverse"
+                    onClick={ChangeOrder}/>
+                <YearSelection
+                    title="From:"
+                    years={years}
+                    year={from}
+                    setYear={setFrom}/>
+                <YearSelection
+                    title="To:"
+                    years={years}
+                    year={to}
+                    setYear={setTo}/>
             </div>
         </div>
     )
@@ -40,10 +67,22 @@ function Filters({header, years, handleYears}) {
 export default Filters;
 
 
-function ActionButton({id, title, a, b, onClick}) {
+function SwitchButton({titleA, titleB, a0, b0, onClick}) {
+
+    const options = useContext(OptionsContext);
+    const [title, setTitle] = useState(options.language === a0 ? titleA : titleB);
+
+    const switchMode = () => {
+        options.setLanguage(options.language === b0 ? a0 : b0);
+    }
+
+    useEffect(() => {
+        setTitle(options.language === a0 ? titleA : titleB)
+    }, [options.language]);
+
     return (
-        <button className="section" onClick={onClick}>
-            <span id={id} a={a} b={b}>{title}</span>
+        <button className="section" onClick={switchMode}>
+            <span>{title}</span>
         </button>
     );
 }

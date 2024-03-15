@@ -1,6 +1,6 @@
 import useFetch from "../../useFetch";
-import React, {useEffect, useRef, useState} from "react";
-import {ChangeOrder, SwitchLanguage, ToggleGrouping} from "../../scripts/scripts";
+import React, {createContext, useEffect, useRef, useState} from "react";
+import {ChangeOrder, cookiesHas, SwitchLanguage, ToggleGrouping} from "../../scripts/scripts";
 import Entry from "./Entry";
 import Filters from "./Filters";
 
@@ -16,9 +16,9 @@ function Animanga({id}) {
 
     const options = useRef(null);
 
-    useEffect(() => {
+/*    useEffect(() => {
         document.addEventListener("keydown", handleKeyDown);
-    }, []);
+    }, []);*/
 
     useEffect(() => {
         if (animanga) {
@@ -32,16 +32,17 @@ function Animanga({id}) {
             const countEntry = animanga ? Object.keys(entries).length : 0;
             setHeader(`${countEntry}/${countTotal} titles · ${animanga.seriesShown}/${animanga.seriesTotal} series`);
 
-            handleCookies();
+            //handleCookies();
         }
-        if (options.current) handleActions(options.current);
+        //if (options.current) handleActions(options.current);
     }, [entries]);
 
     const handleYearsChange = (from, to) => {
-        options.current = handleCookies();
+        //options.current = handleCookies();
         setUrl(`${baseUrl + id}/${from}/${to}`);
     }
 
+/*
     const handleCookies = () => {
         let cookies = document.cookie.toString();
         let ops = {
@@ -52,7 +53,9 @@ function Animanga({id}) {
         handleActions(ops);
         return ops;
     }
+*/
 
+/*
     const handleActions = ({j, g, r}) => {
         if (j) SwitchLanguage();
         if (g) ToggleGrouping();
@@ -66,6 +69,14 @@ function Animanga({id}) {
         else if (key === 71) ToggleGrouping();
         else if (key === 82) ChangeOrder();
     }
+*/
+
+    const [language, setLanguage] = useState(cookiesHas('lang=japanese') ? "japanese" : "english");
+
+    useEffect(() => {
+        document.cookie = 'lang=' + language + '; max-age=7776000; path=/';
+    }, [language]);
+
 
     return (
 
@@ -73,7 +84,7 @@ function Animanga({id}) {
             <main role="main" className="pb-3">
                 {
                     animanga && entries ?
-                        <React.Fragment>
+                        <OptionsContext.Provider value={{language, setLanguage}}>
                             <Filters
                                 header={header}
                                 years={animanga.years}
@@ -100,7 +111,7 @@ function Animanga({id}) {
                                     <span id="tip"></span>
                                 </div>
                             </div>
-                        </React.Fragment>
+                        </OptionsContext.Provider>
                         : <div className="section-name error">{error ? error : 'Loading...'}</div>
                 }
             </main>
@@ -109,3 +120,5 @@ function Animanga({id}) {
 }
 
 export default Animanga;
+
+export const OptionsContext = createContext(null);

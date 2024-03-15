@@ -1,19 +1,12 @@
-import {tipHide, tipShow} from "../../scripts/scripts";
-import React from "react";
+import {cookiesHas, tipHide, tipShow} from "../../scripts/scripts";
+import React, {useContext, useEffect, useState} from "react";
 
 import AiringTip from "./AiringTip";
 import TimelineRow from "./TimelineRow";
+import {OptionsContext} from "./Animanga";
 
-function Entry({item, maxDay, minDay, sections, index}) {
+export default function Entry({item, maxDay, minDay, sections, index}) {
 
-    const statuses = [
-        "CURRENT",
-        "PLANNING",
-        "COMPLETED",
-        "DROPPED",
-        "PAUSED",
-        "REPEATING",
-    ]
     const status = statuses[item.status];
     const media = item.media;
     const baseUrl = `https://s4.anilist.co/file/anilistcdn/media/${media.type === 0 ? 'anime' : 'manga'}/cover/`;
@@ -43,9 +36,7 @@ function Entry({item, maxDay, minDay, sections, index}) {
                 </div>
                 <a className="link" href={media.url} target="_blank">{media.type === 0 ? "ア" : "マ"}</a>
             </div>
-            <div className={"title " + status} english={media.title.english} japanese={media.title.japanese}>
-                {media.title.english}
-            </div>
+            <Title status={status} title={media.title}/>
             <div className="timeline">
                 <TimelineRow sections={sections} timeframe={timeframe} text={false}/>
                 {
@@ -78,4 +69,18 @@ function Entry({item, maxDay, minDay, sections, index}) {
     )
 }
 
-export default Entry;
+function Title({status, title}) {
+
+    const options = useContext(OptionsContext);
+    const [text, setText] = useState(options.language === 'japanese' ? title.japanese : title.english);
+
+    useEffect(() => {
+        setText(options.language === 'japanese' ? title.japanese : title.english);
+    }, [options.language]);
+
+    return (
+        <div className={"title " + status}>{text}</div>
+    )
+}
+
+const statuses = ["CURRENT", "PLANNING", "COMPLETED", "DROPPED", "PAUSED", "REPEATING"];

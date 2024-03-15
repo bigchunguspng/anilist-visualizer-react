@@ -24,6 +24,11 @@ class Toggler
     }
 }
 
+export function cookiesHas(text)
+{
+    return document.cookie.toString().includes(text);
+}
+
 export function delay(milliseconds)
 {
     return new Promise(resolve =>
