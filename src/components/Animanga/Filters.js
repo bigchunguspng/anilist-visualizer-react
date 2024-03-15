@@ -4,6 +4,7 @@ import {OptionsContext} from "./Animanga";
 
 function Filters({header, years, handleYears}) {
 
+    // YEARS
     const min = years[0];
     const max = years[years.length - 1];
 
@@ -21,6 +22,9 @@ function Filters({header, years, handleYears}) {
         handleYears(from, to);
     }, [from, to]);
 
+    // OTHER
+    const options = useContext(OptionsContext);
+
     return (
         <div className="control-panel">
             <div className="section-name">
@@ -29,26 +33,22 @@ function Filters({header, years, handleYears}) {
             </div>
             <div className="actions" id="buttons">
                 <SwitchButton
-                    id="lang"
-                    a0="english"
-                    b0="japanese"
+                    valueA="english"
+                    valueB="japanese"
                     titleA="日本語"
                     titleB="English"
-                    onClick={SwitchLanguage}/>
+                    option={options.language}
+                    setOption={options.setLanguage}/>
                 <SwitchButton
-                    id="group"
-                    a0="default"
-                    b0="groups"
+                    valueA="default"
+                    valueB="groups"
                     titleA="Group"
-                    titleB="Restore"
-                    onClick={ToggleGrouping}/>
+                    titleB="Restore"/>
                 <SwitchButton
-                    id="reverse"
-                    a0="default"
-                    b0="reverse"
+                    valueA="default"
+                    valueB="reverse"
                     titleA="Reverse"
-                    titleB="Reverse"
-                    onClick={ChangeOrder}/>
+                    titleB="Reverse"/>
                 <YearSelection
                     title="From:"
                     years={years}
@@ -67,18 +67,17 @@ function Filters({header, years, handleYears}) {
 export default Filters;
 
 
-function SwitchButton({titleA, titleB, a0, b0, onClick}) {
+function SwitchButton({titleA, titleB, valueA, valueB, option, setOption}) {
 
-    const options = useContext(OptionsContext);
-    const [title, setTitle] = useState(options.language === a0 ? titleA : titleB);
+    const getTitle = () => option === valueA ? titleA : titleB;
+
+    const [title, setTitle] = useState(getTitle());
 
     const switchMode = () => {
-        options.setLanguage(options.language === b0 ? a0 : b0);
+        setOption(option === valueB ? valueA : valueB);
     }
 
-    useEffect(() => {
-        setTitle(options.language === a0 ? titleA : titleB)
-    }, [options.language]);
+    useEffect(() => setTitle(getTitle()), [option]);
 
     return (
         <button className="section" onClick={switchMode}>

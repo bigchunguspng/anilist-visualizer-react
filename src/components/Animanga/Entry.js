@@ -36,7 +36,7 @@ export default function Entry({item, maxDay, minDay, sections, index}) {
                 </div>
                 <a className="link" href={media.url} target="_blank">{media.type === 0 ? "ア" : "マ"}</a>
             </div>
-            <Title status={status} title={media.title}/>
+            <Title status={status} titles={media.title}/>
             <div className="timeline">
                 <TimelineRow sections={sections} timeframe={timeframe} text={false}/>
                 {
@@ -69,17 +69,17 @@ export default function Entry({item, maxDay, minDay, sections, index}) {
     )
 }
 
-function Title({status, title}) {
+function Title({status, titles}) {
 
     const options = useContext(OptionsContext);
-    const [text, setText] = useState(options.language === 'japanese' ? title.japanese : title.english);
+    const [title, setTitle] = useState(options.language === 'japanese' ? titles.japanese : titles.english);
 
     useEffect(() => {
-        setText(options.language === 'japanese' ? title.japanese : title.english);
+        setTitle(options.language === 'japanese' ? titles.japanese : titles.english);
     }, [options.language]);
 
     return (
-        <div className={"title " + status}>{text}</div>
+        <div className={"title " + status}>{title}</div>
     )
 }
 
