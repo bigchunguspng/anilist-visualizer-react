@@ -1,6 +1,6 @@
 import useFetch from "../../useFetch";
 import React, {createContext, useEffect, useRef, useState} from "react";
-import {cookiesHas, GroupEntries, setCookie} from "../../scripts/scripts";
+import {cookiesHas, groupEntries, setCookie} from "../../scripts/scripts";
 import Entry from "./Entry";
 import Filters from "./Filters";
 
@@ -60,7 +60,7 @@ export default function Animanga({id}) {
     // OTHER
     const getVisibleEntries = () => animanga.entries.filter(x => x.timelineItem !== null);
 
-    const applyGrouping = (entries) => grouping === "grouped" ? GroupEntries(entries) : getVisibleEntries();
+    const applyGrouping = (entries) => grouping === "grouped" ? groupEntries(entries) : getVisibleEntries();
 
     useEffect(() => {
         if (entries) setEntries(applyGrouping(entries));
