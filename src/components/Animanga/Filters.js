@@ -2,7 +2,7 @@ import {ChangeOrder, SwitchLanguage, ToggleGrouping} from "../../scripts/scripts
 import React, {useContext, useEffect, useRef, useState} from "react";
 import {OptionsContext} from "./Animanga";
 
-function Filters({header, years, handleYears}) {
+export default function Filters({header, years, handleYears}) {
 
     // YEARS
     const min = years[0];
@@ -48,7 +48,9 @@ function Filters({header, years, handleYears}) {
                     valueA="default"
                     valueB="reverse"
                     titleA="Reverse"
-                    titleB="Reverse"/>
+                    titleB="Reverse"
+                    option={options.ordering}
+                    setOption={options.setOrdering}/>
                 <YearSelection
                     title="From:"
                     years={years}
@@ -63,9 +65,6 @@ function Filters({header, years, handleYears}) {
         </div>
     )
 }
-
-export default Filters;
-
 
 function SwitchButton({titleA, titleB, valueA, valueB, option, setOption}) {
 

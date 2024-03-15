@@ -14,15 +14,35 @@ function Animanga({id}) {
 
     const {data: animanga, error} = useFetch(url);
 
-    const options = useRef(null);
+    //const options = useRef(null);
 
-/*    useEffect(() => {
-        document.addEventListener("keydown", handleKeyDown);
-    }, []);*/
+    const [language, setLanguage] = useState(cookiesHas('lang=japanese') ? "japanese" : "english");
+    const [ordering, setOrdering] = useState(cookiesHas('reverse=reverse') ? "reverse" : "default");
+
+    useEffect(() => {
+        document.cookie = 'lang=' + language + '; max-age=7776000; path=/';
+    }, [language]);
+
+    useEffect(() => {
+        document.cookie = 'reverse=' + ordering + '; max-age=7776000; path=/';
+    }, [ordering]);
+
+    useEffect(() => {
+        if (entries) {
+            const copy = [...entries];
+            setEntries(copy.reverse());
+        }
+    }, [ordering]);
+
+
+    /*    useEffect(() => {
+            document.addEventListener("keydown", handleKeyDown);
+        }, []);*/
 
     useEffect(() => {
         if (animanga) {
-            setEntries(animanga.entries.filter(x => x.timelineItem !== null));
+            const visible = animanga.entries.filter(x => x.timelineItem !== null);
+            setEntries(ordering === 'reverse' ? visible.reverse() : visible);
         }
     }, [animanga]);
 
@@ -71,12 +91,6 @@ function Animanga({id}) {
     }
 */
 
-    const [language, setLanguage] = useState(cookiesHas('lang=japanese') ? "japanese" : "english");
-
-    useEffect(() => {
-        document.cookie = 'lang=' + language + '; max-age=7776000; path=/';
-    }, [language]);
-
 
     return (
 
@@ -84,7 +98,7 @@ function Animanga({id}) {
             <main role="main" className="pb-3">
                 {
                     animanga && entries ?
-                        <OptionsContext.Provider value={{language, setLanguage}}>
+                        <OptionsContext.Provider value={{language, setLanguage, ordering, setOrdering}}>
                             <Filters
                                 header={header}
                                 years={animanga.years}
