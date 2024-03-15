@@ -1,105 +1,99 @@
 import useFetch from "../../useFetch";
 import React, {createContext, useEffect, useRef, useState} from "react";
-import {ChangeOrder, cookiesHas, SwitchLanguage, ToggleGrouping} from "../../scripts/scripts";
+import {cookiesHas, GroupEntries, setCookie} from "../../scripts/scripts";
 import Entry from "./Entry";
 import Filters from "./Filters";
 
-function Animanga({id}) {
+export default function Animanga({id}) {
 
+    // DATA
     const baseUrl = 'http://localhost:5000/api/animanga/';
 
     const [url, setUrl] = useState(baseUrl + id);
     const [entries, setEntries] = useState(null);
     const [header, setHeader] = useState(null);
 
+    const visibleCount = useRef(0);
+
     const {data: animanga, error} = useFetch(url);
 
-    //const options = useRef(null);
+    const handleYearsSelection = (from, to) => setUrl(`${baseUrl + id}/${from}/${to}`);
 
+
+    // COOKIES
     const [language, setLanguage] = useState(cookiesHas('lang=japanese') ? "japanese" : "english");
-    const [ordering, setOrdering] = useState(cookiesHas('reverse=reverse') ? "reverse" : "default");
+    const [grouping, setGrouping] = useState(cookiesHas('group=grouped') ? "grouped" : "default");
+    const [ordering, setOrdering] = useState(cookiesHas('order=reverse') ? "reverse" : "default");
+
+    const options = useRef({});
 
     useEffect(() => {
-        document.cookie = 'lang=' + language + '; max-age=7776000; path=/';
+        options.current.language = language;
+        setCookie('lang', language);
     }, [language]);
 
     useEffect(() => {
-        document.cookie = 'reverse=' + ordering + '; max-age=7776000; path=/';
+        options.current.grouping = grouping;
+        setCookie('group', grouping);
+    }, [grouping]);
+
+    useEffect(() => {
+        options.current.ordering = ordering;
+        setCookie('order', ordering);
     }, [ordering]);
 
-    /*useEffect(() => {
-        if (entries) {
-            const copy = [...entries];
-            setEntries(copy.reverse());
-        }
-    }, [ordering]);*/
 
-
-    /*    useEffect(() => {
-            document.addEventListener("keydown", handleKeyDown);
-        }, []);*/
-
-    useEffect(() => {
-        if (animanga) setEntries(animanga.entries.filter(x => x.timelineItem !== null));
-    }, [animanga]);
-
-    useEffect(() => {
-        if (animanga && entries) {
-            const countTotal = animanga ? Object.keys(animanga.entries).length : 0;
-            const countEntry = animanga ? Object.keys(entries).length : 0;
-            setHeader(`${countEntry}/${countTotal} titles · ${animanga.seriesShown}/${animanga.seriesTotal} series`);
-
-            //handleCookies();
-        }
-        //if (options.current) handleActions(options.current);
-    }, [entries]);
-
-    const handleYearsChange = (from, to) => {
-        //options.current = handleCookies();
-        setUrl(`${baseUrl + id}/${from}/${to}`);
-    }
-
-/*
-    const handleCookies = () => {
-        let cookies = document.cookie.toString();
-        let ops = {
-            j: cookies.includes('lang=japanese'),
-            g: cookies.includes('group=groups'),
-            r: cookies.includes('reverse=reverse')
-        }
-        handleActions(ops);
-        return ops;
-    }
-*/
-
-/*
-    const handleActions = ({j, g, r}) => {
-        if (j) SwitchLanguage();
-        if (g) ToggleGrouping();
-        if (r) ChangeOrder();
-    }
+    // GAMING
+    useEffect(() => document.addEventListener("keydown", handleKeyDown), []);
 
     const handleKeyDown = (event) => {
         let key = event.which;
 
-        if (key === 74) SwitchLanguage();
-        else if (key === 71) ToggleGrouping();
-        else if (key === 82) ChangeOrder();
-    }
-*/
+        if /**/ (key === 74) switchMode(setLanguage, options.current.language, 'english', 'japanese');
+        else if (key === 71) switchMode(setGrouping, options.current.grouping, 'default', 'grouped');
+        else if (key === 82) switchMode(setOrdering, options.current.ordering, 'default', 'reverse');
+    };
+
+    const switchMode = (setOption, option, valueA, valueB) => setOption(option === valueB ? valueA : valueB);
+
+
+    // OTHER
+    const getVisibleEntries = () => animanga.entries.filter(x => x.timelineItem !== null);
+
+    const applyGrouping = (entries) => grouping === "grouped" ? GroupEntries(entries) : getVisibleEntries();
+
+    useEffect(() => {
+        if (entries) setEntries(applyGrouping(entries));
+    }, [grouping]);
+
+    useEffect(() => {
+        if (animanga) {
+            const visible = getVisibleEntries();
+            visibleCount.current = Object.keys(visible).length;
+            setEntries(applyGrouping(visible));
+        }
+    }, [animanga]);
+
+    useEffect(() => {
+        if (animanga && entries) {
+            const total = Object.keys(animanga.entries).length;
+            const shown = visibleCount.current;
+            setHeader(`${shown}/${total} titles · ${animanga.seriesShown}/${animanga.seriesTotal} series`);
+        }
+    }, [entries]);
 
 
     return (
-
         <div className="container-xd">
             <main role="main" className="pb-3">
                 {
                     animanga && entries ?
-                        <OptionsContext.Provider value={{language, setLanguage, ordering, setOrdering}}>
+                        <OptionsContext.Provider
+                            value={{language, setLanguage, grouping, setGrouping, ordering, setOrdering}}>
                             <Filters
                                 header={header}
                                 years={animanga.years}
-                                handleYears={handleYearsChange}/>
+                                handleYears={handleYearsSelection}/>
                             <div>
                                 <div
                                     id="animanga"
@@ -111,13 +105,15 @@ function Animanga({id}) {
                                     {
                                         entries.length > 0 ?
                                             entries.map((x, index) => (
-                                                <Entry
-                                                    item={x}
-                                                    key={x.id}
-                                                    minDay={animanga.minDay}
-                                                    maxDay={animanga.maxDay}
-                                                    sections={animanga.timelineSections}
-                                                    index={index}/>
+                                                x === '-' ?
+                                                    <hr key={index}/> :
+                                                    <Entry
+                                                        item={x}
+                                                        key={x.id}
+                                                        minDay={animanga.minDay}
+                                                        maxDay={animanga.maxDay}
+                                                        sections={animanga.timelineSections}
+                                                        index={index}/>
                                             )) :
                                             <div className="error" style={{marginLeft: '15px'}}>
                                                 This user was too busy touching grass 🦗🍀 to watch anime 📺
@@ -135,7 +131,5 @@ function Animanga({id}) {
         </div>
     )
 }
-
-export default Animanga;
 
 export const OptionsContext = createContext(null);

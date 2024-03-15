@@ -129,6 +129,32 @@ export function GroupElements()
     document.querySelector("#animanga hr:last-child").remove();
 }
 
+export function GroupEntries(entries)
+{
+    const series = new Set();
+
+    for (let i = 0; i < entries.length; i++)
+    {
+        series.add(entries[i].media.seriesId);
+    }
+
+    const copy = [];
+
+    for (const group of series)
+    {
+        const items = entries.filter(x => x.media.seriesId === group);
+        for (let j = 0; j < items.length; j++)
+        {
+            copy.push(items[j]);
+        }
+        copy.push('-');
+    }
+
+    copy.pop();
+
+    return copy;
+}
+
 export function UngroupElements()
 {
     document.querySelectorAll("#animanga > hr").forEach(x => x.remove());
@@ -141,6 +167,10 @@ export function UngroupElements()
         let element = document.querySelector(`#animanga .entry[n='${i}']`);
         target.appendChild(element);
     }
+}
+
+export function setCookie(key, value) {
+    new Promise(() => document.cookie = `${key}=${value}; max-age=7776000; path=/`).catch(function ignore() {});
 }
 
 export function tipShow(element, data)

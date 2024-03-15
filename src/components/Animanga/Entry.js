@@ -1,4 +1,4 @@
-import {cookiesHas, tipHide, tipShow} from "../../scripts/scripts";
+import {tipHide, tipShow} from "../../scripts/scripts";
 import React, {useContext, useEffect, useState} from "react";
 
 import AiringTip from "./AiringTip";
@@ -26,7 +26,7 @@ export default function Entry({item, maxDay, minDay, sections, index}) {
     if (tli.tip.averageSpeed) tip += `<p>${tli.tip.averageSpeed}</p>`;
 
     return (
-        <div className="entry" series={media.seriesId} n={index}>
+        <div className="entry">
             <div className="cover">
                 <div className="image color"
                      style={{

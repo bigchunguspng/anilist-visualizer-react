@@ -1,5 +1,4 @@
-import {ChangeOrder, SwitchLanguage, ToggleGrouping} from "../../scripts/scripts";
-import React, {useContext, useEffect, useRef, useState} from "react";
+import React, {useContext, useEffect, useState} from "react";
 import {OptionsContext} from "./Animanga";
 
 export default function Filters({header, years, handleYears}) {
@@ -41,9 +40,11 @@ export default function Filters({header, years, handleYears}) {
                     setOption={options.setLanguage}/>
                 <SwitchButton
                     valueA="default"
-                    valueB="groups"
+                    valueB="grouped"
                     titleA="Group"
-                    titleB="Restore"/>
+                    titleB="Restore"
+                    option={options.grouping}
+                    setOption={options.setGrouping}/>
                 <SwitchButton
                     valueA="default"
                     valueB="reverse"
