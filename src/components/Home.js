@@ -1,27 +1,20 @@
 import {useState} from "react";
-import Search from "./Search";
-
+import SearchResults from "./Search/SearchResults";
+import {API} from "../scripts/consts";
+import useFetch from "../hooks/useFetch";
 
 function Home() {
 
+    const [url, setUrl] = useState(null);
     const [query, setQuery] = useState('');
-    const [items, setItems] = useState();
 
-    function handleSearch() {
-        fetch(`http://localhost:5000/api/user/search/${query}`)
-            .then(response => {
-                if (!response.ok) throw Error('BRUH...')
-                return response.json();
-            })
-            .then(data => setItems(data))
-        console.log(items);
-    }
+    const {data: users} = useFetch(url);
 
-    function searchOnKeyDown(e) {
-        if (e.key === 'Enter') {
-            handleSearch();
-        }
-    }
+    const triggerSearch = () => setUrl(API + '/user/search/' + query);
+
+    const onKeyDown = e => {
+        if (e.key === 'Enter') triggerSearch();
+    };
 
     return (
         <main className='home pb-3'>
@@ -38,11 +31,13 @@ function Home() {
                         type="text"
                         autoComplete="off"
                         placeholder="Enter your username"
-                        onKeyDown={e => searchOnKeyDown(e)}
+                        onKeyDown={e => onKeyDown(e)}
                         onChange={e => setQuery(e.target.value)}/>
                 </div>
                 <div id="users">
-                    {items && <Search items={items}/>}
+                    {
+                        users && <SearchResults items={users}/>
+                    }
                 </div>
                 <p>Go to <a href="https://anilist.co">AniList</a> if you don't get it.</p>
             </div>

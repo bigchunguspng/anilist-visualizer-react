@@ -1,6 +1,7 @@
 import React, {useContext, useEffect, useState} from "react";
-import {OptionsContext} from "./Animanga";
-import {switchMode} from "../../scripts/scripts";
+import {OptionsContext} from "../Animanga";
+import SwitchButton from "./SwitchButton";
+import YearSelection from "./YearSelection";
 
 export default function Filters({header, years, handleYears}) {
 
@@ -66,38 +67,4 @@ export default function Filters({header, years, handleYears}) {
             </div>
         </div>
     )
-}
-
-function SwitchButton({titleA, titleB, valueA, valueB, option, setOption}) {
-
-    const getTitle = () => option === valueA ? titleA : titleB;
-
-    const [title, setTitle] = useState(getTitle());
-
-    useEffect(() => setTitle(getTitle()), [option]);
-
-    const handleClick = () => switchMode(setOption, option, valueA, valueB);
-
-    return (
-        <button className="section" onClick={handleClick}>
-            <span>{title}</span>
-        </button>
-    );
-}
-
-function YearSelection({title, years, year, setYear}) {
-    return (
-        <React.Fragment>
-            <div>
-                {title}
-            </div>
-            <select className="section" value={year} onChange={e => setYear(e.target.value)}>
-                {
-                    years.map((x) => {
-                        return (<option value={x} key={x}>{x}</option>)
-                    })
-                }
-            </select>
-        </React.Fragment>
-    );
 }

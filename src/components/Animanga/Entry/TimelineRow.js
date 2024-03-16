@@ -1,6 +1,6 @@
 import React from 'react';
 
-function TimelineRow({sections, timeframe, text}) {
+export default function TimelineRow({sections, timeframe, text}) {
 
     const classText = text ? " text" : "";
 
@@ -19,5 +19,3 @@ function TimelineRow({sections, timeframe, text}) {
         </div>
     )
 }
-
-export default TimelineRow;

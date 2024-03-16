@@ -1,8 +1,10 @@
-import {tipHide, tipShow} from "../../scripts/scripts";
-import React, {useContext, useEffect, useState} from "react";
+import {tipHide, tipShow} from "../../../scripts/scripts";
+import React from "react";
 import AiringTip from "./AiringTip";
 import TimelineRow from "./TimelineRow";
-import {OptionsContext} from "./Animanga";
+import {Title} from "./Title";
+import {imageCDN, statuses} from "../../../scripts/consts";
+import {Link} from "react-router-dom";
 
 export default function Entry({entry, maxDay, minDay, sections}) {
 
@@ -39,7 +41,7 @@ export default function Entry({entry, maxDay, minDay, sections}) {
                          '--color-blue': media.cover.color
                      }}>
                 </div>
-                <a className="link" href={media.url} target="_blank">{type === 0 ? "ア" : "マ"}</a>
+                <Link className="link" to={media.url} target="_blank">{type === 0 ? "ア" : "マ"}</Link>
             </div>
             <Title status={status} titles={media.title}/>
             <div className="timeline">
@@ -69,24 +71,3 @@ export default function Entry({entry, maxDay, minDay, sections}) {
         </div>
     )
 }
-
-
-function Title({status, titles}) {
-
-    const options = useContext(OptionsContext);
-
-    const [title, setTitle] = useState(options.language === 'japanese' ? titles.japanese : titles.english);
-
-    useEffect(() => {
-        setTitle(options.language === 'japanese' ? titles.japanese : titles.english);
-    }, [options.language]);
-
-    return (
-        <div className={"title " + status}>{title}</div>
-    )
-}
-
-
-const statuses = ["CURRENT", "PLANNING", "COMPLETED", "DROPPED", "PAUSED", "REPEATING"];
-
-const imageCDN = 'https://s4.anilist.co/file/anilistcdn/media/';

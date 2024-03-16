@@ -1,11 +1,11 @@
-import useFetch from "../../useFetch";
+import useFetch from "../../hooks/useFetch";
 import {useParams} from "react-router-dom";
 import React, {useEffect} from "react";
 import Animanga from "../Animanga/Animanga";
 import SiteLogo from "../SiteLogo";
 import './User.css'
 
-function User() {
+export default function User() {
 
     const {username} = useParams();
     const {data: user, error} = useFetch(`http://localhost:5000/api/user/${username}`);
@@ -36,9 +36,11 @@ function User() {
                     }
                 </div>
             </header>
-            {user ? <Animanga id={user.id}/> : <main/>}
+            {
+                user
+                    ? <Animanga id={user.id}/>
+                    : <main/>
+            }
         </React.Fragment>
     );
 }
-
-export default User;

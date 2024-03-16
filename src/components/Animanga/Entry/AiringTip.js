@@ -1,6 +1,6 @@
 import React from "react";
 
-function AiringTip({airing, percent}) {
+export default function AiringTip({airing, percent}) {
     return (
         <div className="timeline-item releasing stripes"
              style={{
@@ -11,5 +11,3 @@ function AiringTip({airing, percent}) {
         </div>
     )
 }
-
-export default AiringTip;
