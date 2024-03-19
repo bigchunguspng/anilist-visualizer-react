@@ -1,6 +1,6 @@
 import React from "react";
 
-export function UserSearchResultItem({user}) {
+export function UserFoundItem({user}) {
 
     const avatar = user.avatar;
 

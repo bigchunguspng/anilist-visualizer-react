@@ -1,6 +1,6 @@
 import React from "react";
 
-export function UserNotFoundSearchResult() {
+export function UserNotFoundItem() {
     return (
         <div className="search-result entry">
             <div className="cover">

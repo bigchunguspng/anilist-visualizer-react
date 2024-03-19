@@ -4,11 +4,12 @@ import React, {useEffect} from "react";
 import Animanga from "../Animanga/Animanga";
 import SiteLogo from "../SiteLogo";
 import './User.css'
+import {API} from "../../scripts/consts";
 
 export default function User() {
 
     const {username} = useParams();
-    const {data: user, error} = useFetch(`http://localhost:5000/api/user/${username}`);
+    const {data: user, error} = useFetch(API + '/user/' + username);
 
     useEffect(() => {
         document.title = username + " · Anilist Visualizer";
