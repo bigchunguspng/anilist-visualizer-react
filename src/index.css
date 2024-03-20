@@ -573,6 +573,10 @@ div.timeline-item .range {
   color: var(--color-background-300);
 }
 
+.tipbox span p.repeats {
+  color: var(--color-yellow);
+}
+
 .tipbox span p:only-child {
   margin-top: 4px;
 }

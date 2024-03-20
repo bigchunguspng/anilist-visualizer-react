@@ -31,6 +31,8 @@ export default function Entry({entry, maxDay, minDay, sections}) {
         info += `<p>${tip.episodes} ${type === 0 ? 'episode' : 'chapter'}${tip.episodes > 1 ? 's' : ''}</p>`;
     if (tip.averageSpeed)
         info += `<p>${tip.averageSpeed}</p>`;
+    if (entry.repeats > 0)
+        info += `<p class="repeats">+ ${entry.repeats} repeat${entry.repeats > 1 ? 's' : ''}</p>`;
 
     return (
         <div className="entry">
