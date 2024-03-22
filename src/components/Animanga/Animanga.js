@@ -111,6 +111,7 @@ export default function Animanga({id}) {
                                                     <Entry
                                                         entry={x}
                                                         key={x.id}
+                                                        userId={id}
                                                         minDay={animanga.minDay}
                                                         maxDay={animanga.maxDay}
                                                         sections={animanga.timelineSections}

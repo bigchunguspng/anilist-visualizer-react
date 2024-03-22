@@ -525,7 +525,8 @@ div.season {
 
 div.timeline-item .range {
   width: 100%;
-  background-color: var(--color-blue)
+  background-color: var(--color-blue);
+  position: relative;
 }
 
 

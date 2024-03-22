@@ -1,12 +1,14 @@
 import {tipHide, tipShow} from "../../../scripts/scripts";
-import React from "react";
+import React, {useEffect, useState} from "react";
 import AiringTip from "./AiringTip";
 import TimelineRow from "./TimelineRow";
 import {Title} from "./Title";
-import {imageCDN, statuses} from "../../../scripts/consts";
+import {API, imageCDN, statuses} from "../../../scripts/consts";
 import {Link} from "react-router-dom";
+import Activities from "./Activities";
+import useFetch from "../../../hooks/useFetch";
 
-export default function Entry({entry, maxDay, minDay, sections}) {
+export default function Entry({entry, maxDay, minDay, sections, userId}) {
 
     const status = statuses[entry.status];
 
@@ -34,6 +36,28 @@ export default function Entry({entry, maxDay, minDay, sections}) {
     if (entry.repeats > 0)
         info += `<p class="repeats">+ ${entry.repeats} repeat${entry.repeats > 1 ? 's' : ''}</p>`;
 
+    // ACTIVITIES
+    const [url, setUrl] = useState(null);
+    const [details, setDetails] = useState(item.activities);
+    const {data: activities} = useFetch(url);
+
+    const rgb = media.cover.color;
+    const getColor = () => details && rgb ? rgb + '10' : rgb;
+
+    const [color, setColor] = useState(getColor());
+
+    useEffect(() => {
+        if (activities) setDetails(activities);
+    }, [activities]);
+
+    useEffect(() => {
+        setColor(getColor());
+    }, [details]);
+
+    const fetchActivities = () => {
+        setUrl(API + '/activities/' + userId + '/' + media.id);
+    }
+
     return (
         <div className="entry">
             <div className="cover">
@@ -58,11 +82,20 @@ export default function Entry({entry, maxDay, minDay, sections}) {
                      }}>
                     <div className={"range" + (item.stripes ? " stripes" : "")}
                          style={{
-                             '--color-blue': media.cover.color
+                             '--color-blue': (color)
                          }}>
+                        {
+                            details &&
+                            <Activities
+                                activities={details}
+                                timeframe={item.length}
+                                minDay={minDay + item.offset}
+                                color={media.cover.color}/>
+                        }
                         <div className="hover-box"
                              onMouseOver={event => tipShow(event.target, info)}
-                             onMouseOut={tipHide}/>
+                             onMouseOut={tipHide}
+                             onClick={fetchActivities}/>
                     </div>
                 </div>
                 <TimelineRow sections={sections} timeframe={timeframe} text={true}/>
