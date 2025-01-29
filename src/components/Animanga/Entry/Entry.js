@@ -42,7 +42,8 @@ export default function Entry({entry, maxDay, minDay, sections, userId}) {
     const {data: activities} = useFetch(url);
 
     const rgb = media.cover.color;
-    const getColor = () => details && rgb ? rgb + '10' : rgb;
+    const daysColor = rgb ? rgb : '#3db4f2';
+    const getColor = () => details ? rgb ? rgb + '10' : '#3db4f216' : rgb;
 
     const [color, setColor] = useState(getColor());
 
@@ -90,7 +91,7 @@ export default function Entry({entry, maxDay, minDay, sections, userId}) {
                                 activities={details}
                                 timeframe={item.length}
                                 minDay={minDay + item.offset}
-                                color={media.cover.color}/>
+                                color={daysColor}/>
                         }
                         <div className="hover-box"
                              onMouseOver={event => tipShow(event.target, info)}
