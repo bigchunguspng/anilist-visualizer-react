@@ -21,6 +21,7 @@ export default function Animanga({id}) {
     const {data: animanga, error} = useFetch(url);
 
     const handleYearsSelection = (from, to) => setUrl(`${endpoint + id}/${from}/${to}`);
+    const handleLastYear = (lastYear) => { if (lastYear) setUrl(`${endpoint + id}/last-year`); }
 
 
     // COOKIES
@@ -94,7 +95,8 @@ export default function Animanga({id}) {
                             <Filters
                                 header={header}
                                 years={animanga.years}
-                                handleYears={handleYearsSelection}/>
+                                handleYears={handleYearsSelection}
+                                handleLastYear={handleLastYear}/>
                             <div>
                                 <div
                                     id="animanga"
