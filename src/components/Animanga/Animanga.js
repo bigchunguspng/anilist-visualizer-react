@@ -21,7 +21,7 @@ export default function Animanga({id}) {
                 </div>
             </div>
             {
-                type === "classic" ? <AnimangaClassic id={id}/> : <Animanga3M/>
+                type === "classic" ? <AnimangaClassic id={id}/> : <Animanga3M id={id}/>
             }
         </React.Fragment>
     )
