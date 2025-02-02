@@ -804,3 +804,25 @@ header:not(.user) .nav-logo img {
 [type="button"]:not(:disabled), [type="reset"]:not(:disabled), [type="submit"]:not(:disabled), button:not(:disabled) {
   cursor: pointer;
 }
+
+
+.nav-wrap {
+  background-color: white;
+}
+
+.nav-link {
+  margin: 0 10px;
+  padding: 15px;
+  color: var(--color-text-light);
+  display: inline-block;
+  background: transparent;
+  border: 0;
+  font-family: var(--font-tips);
+  font-size: 14px;
+  font-weight: 600;
+  transition-duration: 0.25s;
+}
+
+.nav-link:hover {
+  color: var(--color-text);
+}

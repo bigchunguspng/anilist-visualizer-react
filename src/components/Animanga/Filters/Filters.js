@@ -1,5 +1,5 @@
 import React, {useContext, useEffect, useState} from "react";
-import {OptionsContext} from "../Animanga";
+import {OptionsContext} from "../AnimangaClassic";
 import SwitchButton from "./SwitchButton";
 import ActionButton from "./ActionButton";
 import YearSelection from "./YearSelection";
