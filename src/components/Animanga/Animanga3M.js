@@ -17,6 +17,9 @@ export default function Animanga3M({id}) {
         }
     }, [animanga]);
 
+    const percent = (x) => (data ? (x / animanga.smallerUnits.length) * 100 + '%' : '0%');
+    const percentH = (x) => (data ? (x / animanga.maxProgressValue) * 100 + '%' : '0%');
+
     return (
         <div className="container-xd">
             <main role="main" className="pb-3">
@@ -24,10 +27,48 @@ export default function Animanga3M({id}) {
                     data ?
                         <React.Fragment>
                             <div id="days">
-
+                                {
+                                    data.smallerUnits.length > 0 ?
+                                        data.smallerUnits.map((x, index) => (
+                                            <div
+                                                className="am3-day"
+                                                style={{
+                                                    '--width': percent(x.value)
+                                                }}>
+                                                <div
+                                                    className="am3-day-title">
+                                                    {x.title}
+                                                </div>
+                                                {
+                                                    data.activities[index+20029].length && // todo API index = 0
+                                                    data.activities[index+20029].map((x) => (
+                                                        <div
+                                                            className="am3-activity"
+                                                            style={{
+                                                                '--height': percentH(x.progress),
+                                                                '--color-blue': x.media.cover.color
+                                                            }}>
+                                                            {x.episodes}
+                                                        </div>
+                                                    ))
+                                                }
+                                            </div>
+                                        )) : <div className="am3-day">-</div>
+                                }
                             </div>
                             <div id="months">
-                                {data.biggerUnits[0].title}
+                                {
+                                    data.biggerUnits.length > 0 ?
+                                        data.biggerUnits.map((x) => (
+                                            <div
+                                                className="am3-month"
+                                                style={{
+                                                    '--width': percent(x.value)
+                                                }}>
+                                                {x.title}
+                                            </div>
+                                        )) : <div className="am3-month">-</div>
+                                }
                             </div>
                         </React.Fragment>
                         : <div className="section-name error">{error ? error : 'Loading...'}</div>

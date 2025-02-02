@@ -125,6 +125,7 @@ p {
   --font-logo: "Kaushan Script";
   --left:  0;
   --width: 0;
+  --height: 0;
   --shadow-opacity: 0.09;
 }
 
@@ -825,4 +826,32 @@ header:not(.user) .nav-logo img {
 
 .nav-link:hover {
   color: var(--color-text);
+}
+
+
+#days, #months {
+  display: flex;
+}
+
+.am3-day, .am3-month {
+  width: var(--width);
+  text-align: center;
+  padding: 4px 0;
+  box-sizing: border-box;
+  transition-duration: 0.05s;
+}
+
+.am3-day:hover, .am3-month:hover {
+  background-color: var(--color-background-300);
+}
+
+.am3-day {
+  height: 240px;
+  display: flex;
+  flex-direction: column-reverse;
+}
+
+.am3-activity {
+  background-color: var(--color-blue);
+  height: var(--height);
 }
