@@ -30,16 +30,23 @@ export default function Animanga3M({id}) {
     }
 
     const highlightSeries = (x) => {
+        const className = `media-${x.media.id}`;
+        const type = x.media.type === 0 ? 'anime' : 'manga';
+        const prefix = `https://s4.anilist.co/file/anilistcdn/media/${type}/cover/`;
+        const bg = `url("${prefix}${x.media.cover.large}"), url("${prefix}${x.media.cover.medium}")`;
+        document.getElementById("image").style.setProperty("background-image", bg);
         document.querySelectorAll(`.am3-activity`).forEach(el => el.classList.remove("semi"));
-        document.querySelectorAll(`.am3-activity:not(.${x})`).forEach(el => el.classList.add("semi"));
+        document.querySelectorAll(`.am3-activity:not(.${className})`).forEach(el => el.classList.add("semi"));
     };
     const unHighlightAll = () => {
         document.querySelectorAll(`.am3-activity`).forEach(el => el.classList.remove("semi"));
     }
 
+    // todo: mouse over / out = show / hide image, highlight / un-highlight other
+
     return (
         <div className="container-xd" onDoubleClick={unHighlightAll}>
-            <main role="main" className="pb-3">
+            <main role="main" className="pb-3" style={{'position': 'relative'}}>
                 {
                     data ?
                         <React.Fragment>
@@ -63,7 +70,7 @@ export default function Animanga3M({id}) {
                                                                 className={`am3-activity tip-rect-ref media-${x.media.id}`}
                                                                 onMouseOver={event => tipShowA3M(event.target, getInfo(x))}
                                                                 onMouseOut={tipHide}
-                                                                onMouseDown={() => highlightSeries(`media-${x.media.id}`)}
+                                                                onMouseDown={() => highlightSeries(x)}
                                                                 style={{
                                                                     '--height': percentH(x.progress),
                                                                     '--color-blue': x.media.cover.color
@@ -95,6 +102,7 @@ export default function Animanga3M({id}) {
                                     Double click - restore.
                                 </span>
                             </div>
+                            <div className="am3-image" id="image"/>
                             <div className="tipbox absolute">
                                 <span id="tip" style={{'margin': '0px'}}></span>
                             </div>

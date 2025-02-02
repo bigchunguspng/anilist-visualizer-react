@@ -101,14 +101,15 @@ export function tipShowA3M(element, data)
 {
     let day = element.parentElement.getBoundingClientRect();
     let body = document.body.getBoundingClientRect();
+    let main = document.querySelector("main").getBoundingClientRect();
     let tip = document.getElementById("tip");
 
     tip.innerHTML = data;
     tip.style.display = "block";
 
     let tipbox = tip.getBoundingClientRect();
-    let top = day.bottom + 18 - body.top;
-    let left = day.left - ((tipbox.width - day.width) / 2);
+    let top = day.bottom + 18 - body.top - main.top;
+    let left = day.left - ((tipbox.width - day.width) / 2) - main.left;
 
     tip.style.top = top + "px";
     tip.style.left = left + "px";
