@@ -871,3 +871,17 @@ header:not(.user) .nav-logo img {
 .semi {
   opacity: 0.2;
 }
+
+.hint-message-div {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.hint-message {
+  margin-top: 65px;
+  color: var(--color-text-light);
+  font-family: var(--font-tips);
+  font-size: 0.8rem;
+  text-align: center;
+}

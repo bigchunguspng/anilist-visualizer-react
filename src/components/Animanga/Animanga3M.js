@@ -89,6 +89,12 @@ export default function Animanga3M({id}) {
                                         )) : <div className="am3-month">-</div>
                                 }
                             </div>
+                            <div className="hint-message-div">
+                                <span className="hint-message">
+                                    Single click - highlight specific title.<br/>
+                                    Double click - restore.
+                                </span>
+                            </div>
                             <div className="tipbox absolute">
                                 <span id="tip" style={{'margin': '0px'}}></span>
                             </div>

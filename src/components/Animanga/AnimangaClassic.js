@@ -124,6 +124,14 @@ export default function AnimangaClassic({id}) {
                                             </div>
                                     }
                                 </div>
+                                <div className="hint-message-div">
+                                <span className="hint-message">
+                                    J - switch language.<br/>
+                                    G - switch grouping.<br/>
+                                    R - reverse / restore.<br/><br/>
+                                    Click on colorful rectangle to see activities. Timeline height = 8 episodes / chapters.
+                                </span>
+                                </div>
                                 <div className="tipbox absolute">
                                     <span id="tip"></span>
                                 </div>
