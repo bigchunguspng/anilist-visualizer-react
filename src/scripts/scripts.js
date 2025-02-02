@@ -103,8 +103,6 @@ export function tipShowA3M(element, data)
     let body = document.body.getBoundingClientRect();
     let tip = document.getElementById("tip");
 
-    console.log(day, body, tip);
-
     tip.innerHTML = data;
     tip.style.display = "block";
 

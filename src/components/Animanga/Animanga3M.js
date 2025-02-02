@@ -1,7 +1,7 @@
-import React, {useEffect, useRef, useState} from "react";
+import React, {useEffect, useState} from "react";
 import useFetch from "../../hooks/useFetch";
 import {API} from "../../scripts/consts";
-import {tipHide, tipShow, tipShowA3M} from "../../scripts/scripts";
+import {tipHide, tipShowA3M} from "../../scripts/scripts";
 
 export default function Animanga3M({id}) {
 
@@ -29,8 +29,16 @@ export default function Animanga3M({id}) {
         return info;
     }
 
+    const highlightSeries = (x) => {
+        document.querySelectorAll(`.am3-activity`).forEach(el => el.classList.remove("semi"));
+        document.querySelectorAll(`.am3-activity:not(.${x})`).forEach(el => el.classList.add("semi"));
+    };
+    const unHighlightAll = () => {
+        document.querySelectorAll(`.am3-activity`).forEach(el => el.classList.remove("semi"));
+    }
+
     return (
-        <div className="container-xd">
+        <div className="container-xd" onDoubleClick={unHighlightAll}>
             <main role="main" className="pb-3">
                 {
                     data ?
@@ -52,9 +60,10 @@ export default function Animanga3M({id}) {
                                                     data.activities[index].length ?
                                                         data.activities[index].map((x) => (
                                                             <div
-                                                                className="am3-activity tip-rect-ref"
+                                                                className={`am3-activity tip-rect-ref media-${x.media.id}`}
                                                                 onMouseOver={event => tipShowA3M(event.target, getInfo(x))}
                                                                 onMouseOut={tipHide}
+                                                                onMouseDown={() => highlightSeries(`media-${x.media.id}`)}
                                                                 style={{
                                                                     '--height': percentH(x.progress),
                                                                     '--color-blue': x.media.cover.color
@@ -81,7 +90,7 @@ export default function Animanga3M({id}) {
                                 }
                             </div>
                             <div className="tipbox absolute">
-                                <span id="tip" style={{ 'margin': '0px' }}></span>
+                                <span id="tip" style={{'margin': '0px'}}></span>
                             </div>
                         </React.Fragment>
                         : <div className="section-name error">{error ? error : 'Loading...'}</div>

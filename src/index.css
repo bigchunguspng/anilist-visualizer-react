@@ -867,3 +867,7 @@ header:not(.user) .nav-logo img {
   box-shadow: 0 2px 20px rgba(var(--color-shadow), 0.3);
   z-index: 1000;
 }
+
+.semi {
+  opacity: 0.2;
+}
