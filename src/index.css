@@ -833,16 +833,19 @@ header:not(.user) .nav-logo img {
   display: flex;
 }
 
+#days {
+  padding-top: 20px;
+}
+
 .am3-day, .am3-month {
   width: var(--width);
   text-align: center;
-  padding: 4px 0;
   box-sizing: border-box;
   transition-duration: 0.05s;
 }
 
 .am3-day:hover, .am3-month:hover {
-  background-color: var(--color-background-300);
+  background-color: var(--color-background-100);
 }
 
 .am3-day {
@@ -851,7 +854,16 @@ header:not(.user) .nav-logo img {
   flex-direction: column-reverse;
 }
 
+.am3-month, .am3-day-title {
+  padding: 4px 0;
+}
+
 .am3-activity {
   background-color: var(--color-blue);
   height: var(--height);
+}
+
+.am3-activity:hover {
+  box-shadow: 0 2px 20px rgba(var(--color-shadow), 0.3);
+  z-index: 1000;
 }

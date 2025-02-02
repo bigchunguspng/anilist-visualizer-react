@@ -71,7 +71,7 @@ export default function Entry({entry, maxDay, minDay, sections, userId}) {
                 <Link className="link" to={media.url} target="_blank">{type === 0 ? "ア" : "マ"}</Link>
             </div>
             <Title status={status} titles={media.title}/>
-            <div className="timeline">
+            <div className="timeline tip-rect-ref">
                 <TimelineRow sections={sections} timeframe={timeframe} text={false}/>
                 {
                     airing && <AiringTip airing={airing} percent={percent}/>

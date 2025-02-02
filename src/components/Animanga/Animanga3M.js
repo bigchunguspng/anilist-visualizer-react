@@ -1,6 +1,7 @@
 import React, {useEffect, useRef, useState} from "react";
 import useFetch from "../../hooks/useFetch";
 import {API} from "../../scripts/consts";
+import {tipHide, tipShow, tipShowA3M} from "../../scripts/scripts";
 
 export default function Animanga3M({id}) {
 
@@ -19,6 +20,14 @@ export default function Animanga3M({id}) {
 
     const percent = (x) => (data ? (x / animanga.smallerUnits.length) * 100 + '%' : '0%');
     const percentH = (x) => (data ? (x / animanga.maxProgressValue) * 100 + '%' : '0%');
+
+    const getInfo = (x) => {
+        let info = `<p>${x.media.title.english}</p>`;
+        if (x.episodes)
+            info += `<p>${x.episodes}</p>`;
+        info += `<p>${x.progress} ${x.media.type === 0 ? 'episode' : 'chapter'}${x.progress > 1 ? 's' : ''}</p>`;
+        return info;
+    }
 
     return (
         <div className="container-xd">
@@ -40,17 +49,18 @@ export default function Animanga3M({id}) {
                                                     {x.title}
                                                 </div>
                                                 {
-                                                    data.activities[index].length &&
-                                                    data.activities[index].map((x) => (
-                                                        <div
-                                                            className="am3-activity"
-                                                            style={{
-                                                                '--height': percentH(x.progress),
-                                                                '--color-blue': x.media.cover.color
-                                                            }}>
-                                                            {x.episodes}
-                                                        </div>
-                                                    ))
+                                                    data.activities[index].length ?
+                                                        data.activities[index].map((x) => (
+                                                            <div
+                                                                className="am3-activity tip-rect-ref"
+                                                                onMouseOver={event => tipShowA3M(event.target, getInfo(x))}
+                                                                onMouseOut={tipHide}
+                                                                style={{
+                                                                    '--height': percentH(x.progress),
+                                                                    '--color-blue': x.media.cover.color
+                                                                }}>
+                                                            </div>
+                                                        )) : <span/>
                                                 }
                                             </div>
                                         )) : <div className="am3-day">-</div>
@@ -69,6 +79,9 @@ export default function Animanga3M({id}) {
                                             </div>
                                         )) : <div className="am3-month">-</div>
                                 }
+                            </div>
+                            <div className="tipbox absolute">
+                                <span id="tip" style={{ 'margin': '0px' }}></span>
                             </div>
                         </React.Fragment>
                         : <div className="section-name error">{error ? error : 'Loading...'}</div>
