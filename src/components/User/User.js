@@ -11,9 +11,20 @@ export default function User() {
     const {username} = useParams();
     const {data: user, error} = useFetch(API + '/user/' + username);
 
+    const changeIcon = (url) => {
+        const link = document.querySelector("link[rel~='icon']") || document.createElement("link");
+        link.rel = "icon";
+        link.href = url;
+        document.head.appendChild(link);
+    };
+
     useEffect(() => {
         document.title = username + " · Anilist Visualizer";
     }, [username]);
+
+    useEffect(() => {
+        if (user) changeIcon(user.avatar.medium);
+    }, [user]);
 
     return (
         <React.Fragment>
