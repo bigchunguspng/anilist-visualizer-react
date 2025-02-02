@@ -40,8 +40,8 @@ export default function Animanga3M({id}) {
                                                     {x.title}
                                                 </div>
                                                 {
-                                                    data.activities[index+20029].length && // todo API index = 0
-                                                    data.activities[index+20029].map((x) => (
+                                                    data.activities[index].length &&
+                                                    data.activities[index].map((x) => (
                                                         <div
                                                             className="am3-activity"
                                                             style={{
