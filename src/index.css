@@ -125,6 +125,7 @@ p {
   --font-logo: "Kaushan Script";
   --left:  0;
   --width: 0;
+  --height: 0;
   --shadow-opacity: 0.09;
 }
 
@@ -525,7 +526,8 @@ div.season {
 
 div.timeline-item .range {
   width: 100%;
-  background-color: var(--color-blue)
+  background-color: var(--color-blue);
+  position: relative;
 }
 
 
@@ -802,4 +804,95 @@ header:not(.user) .nav-logo img {
 
 [type="button"]:not(:disabled), [type="reset"]:not(:disabled), [type="submit"]:not(:disabled), button:not(:disabled) {
   cursor: pointer;
+}
+
+
+.nav-wrap {
+  background-color: white;
+}
+
+.nav-link {
+  margin: 0 10px;
+  padding: 15px;
+  color: var(--color-text-light);
+  display: inline-block;
+  background: transparent;
+  border: 0;
+  font-family: var(--font-tips);
+  font-size: 14px;
+  font-weight: 600;
+  transition-duration: 0.25s;
+}
+
+.nav-link:hover {
+  color: var(--color-text);
+}
+
+
+#days, #months {
+  display: flex;
+}
+
+#days {
+  padding-top: 20px;
+}
+
+.am3-day, .am3-month {
+  width: var(--width);
+  text-align: center;
+  box-sizing: border-box;
+  transition-duration: 0.05s;
+}
+
+.am3-day:hover, .am3-month:hover {
+  background-color: var(--color-background-100);
+}
+
+.am3-day {
+  height: 240px;
+  display: flex;
+  flex-direction: column-reverse;
+}
+
+.am3-month, .am3-day-title {
+  padding: 4px 0;
+}
+
+.am3-activity {
+  background-color: var(--color-blue);
+  height: var(--height);
+}
+
+.am3-activity:hover {
+  box-shadow: 0 2px 20px rgba(var(--color-shadow), 0.3);
+  z-index: 1000;
+}
+
+.semi {
+  opacity: 0.2;
+}
+
+.hint-message-div {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.hint-message {
+  margin-top: 65px;
+  color: var(--color-text-light);
+  font-family: var(--font-tips);
+  font-size: 0.8rem;
+  text-align: center;
+}
+
+.am3-image {
+  position: absolute;
+  top: 40px;
+  left: -180px;
+  width: 140px;
+  height: 200px;
+  background-position: 50%;
+  background-size: cover;
+  box-shadow: 0 2px 20px rgba(var(--color-shadow), 0.3);
 }

@@ -1,5 +1,5 @@
 import React, {useContext} from "react";
-import {OptionsContext} from "../Animanga";
+import {OptionsContext} from "../AnimangaClassic";
 import {JAP} from "../../../scripts/consts";
 import {useDoubleTitle} from "../../../hooks/useDoubleTitle";
 

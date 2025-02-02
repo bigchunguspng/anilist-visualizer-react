@@ -83,7 +83,7 @@ export function tipShow(element, data)
     let hoverbox = element.getBoundingClientRect();
     let body = document.body.getBoundingClientRect();
     let tip = document.getElementById("tip");
-    let edge = document.querySelector(".timeline").getBoundingClientRect().right - 20;
+    let edge = document.querySelector(".tip-rect-ref").getBoundingClientRect().right - 20;
 
     tip.innerHTML = data;
     tip.style.display = "block";
@@ -92,6 +92,24 @@ export function tipShow(element, data)
     let top = hoverbox.top - body.top - 12 - tipbox.height;
     let left = hoverbox.left - body.left;
     if (left + tipbox.width > edge) left -= (tipbox.width + 5);
+
+    tip.style.top = top + "px";
+    tip.style.left = left + "px";
+}
+
+export function tipShowA3M(element, data)
+{
+    let day = element.parentElement.getBoundingClientRect();
+    let body = document.body.getBoundingClientRect();
+    let main = document.querySelector("main").getBoundingClientRect();
+    let tip = document.getElementById("tip");
+
+    tip.innerHTML = data;
+    tip.style.display = "block";
+
+    let tipbox = tip.getBoundingClientRect();
+    let top = day.bottom + 18 - body.top - main.top;
+    let left = day.left - ((tipbox.width - day.width) / 2) - main.left;
 
     tip.style.top = top + "px";
     tip.style.left = left + "px";

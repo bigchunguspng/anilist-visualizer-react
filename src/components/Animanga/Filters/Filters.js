@@ -1,9 +1,10 @@
 import React, {useContext, useEffect, useState} from "react";
-import {OptionsContext} from "../Animanga";
+import {OptionsContext} from "../AnimangaClassic";
 import SwitchButton from "./SwitchButton";
+import ActionButton from "./ActionButton";
 import YearSelection from "./YearSelection";
 
-export default function Filters({header, years, handleYears}) {
+export default function Filters({header, years, handleYears, handleLastYear}) {
 
     // YEARS
     const min = years[0];
@@ -15,9 +16,20 @@ export default function Filters({header, years, handleYears}) {
     const [fromWas, setFromWas] = useState(from);
     const [toWas, setToWas] = useState(to);
 
+    const [lastYear, setLastYear] = useState(false);
+    const [lastYearWas, setLastYearWas] = useState(lastYear);
+
+    useEffect(() => {
+        if (lastYear === lastYearWas) return;
+
+        handleLastYear(lastYear);
+        setLastYearWas(lastYear);
+    }, [lastYear]);
+
     useEffect(() => {
         if (from === fromWas && to === toWas) return;
 
+        setLastYear(false);
         setFromWas(from);
         setToWas(to);
         handleYears(from, to);
@@ -33,6 +45,12 @@ export default function Filters({header, years, handleYears}) {
                 <div>{header}</div>
             </div>
             <div className="actions" id="buttons">
+                {
+                    lastYear === false &&
+                    <ActionButton
+                        title="Last year"
+                        setOption={setLastYear}/>
+                }
                 <SwitchButton
                     valueA="english"
                     valueB="japanese"
