@@ -16,4 +16,4 @@ export const JAP = 'japanese';
 
 
 // API
-export const API = 'http://localhost:5000/api';
+export const API = 'http://192.168.0.103:5000/api';
